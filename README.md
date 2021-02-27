@@ -158,6 +158,12 @@ Sapper is in early development, and may have the odd rough edge here and there. 
 
 # COMMANDS and things
 
+## EPISODE 3 - APIs and user registration
+
+src/routes/index.svelte
+src/shared/apis.js
+webpack.config.js
+
 ## EPISODE 2 - short install some packages + discuss
 
 package.json
