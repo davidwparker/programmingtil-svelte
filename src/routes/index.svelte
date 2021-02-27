@@ -44,8 +44,8 @@
   on:submit|preventDefault={handleSubmit}
   method="POST"
 >
-  <div class="rounded-md shadow-sm">
-    <div class="-mt-px relative">
+  <div>
+    <div>
       <input
         aria-label="Email address"
         name="user[email]"
@@ -55,7 +55,7 @@
         bind:value={email}
       />
     </div>
-    <div class="-mt-px">
+    <div>
       <input
         aria-label="Password"
         name="user[password]"
