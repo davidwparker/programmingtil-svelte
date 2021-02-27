@@ -1,0 +1,12 @@
+.DS_Store
+/node_modules/
+/src/node_modules/@sapper/
+/.sapper/
+/__sapper__/
+yarn.lock
+yarn-error.log
+/cypress/screenshots/
+/export/
+/build/
+/.sessions/
+.env
