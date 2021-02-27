@@ -158,6 +158,32 @@ Sapper is in early development, and may have the odd rough edge here and there. 
 
 # COMMANDS and things
 
+## EPISODE 2 - short install some packages + discuss
+
+package.json
+```
+  "dependencies": {
+    "@fullhuman/postcss-purgecss": "^2.3.0",
+    "@tailwindcss/forms": "^0.2.1",
+    "autoprefixer": "^9.8.6",
+    "body-parser": "^1.19.0",
+    "cssnano": "^4.1.10",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "postcss": "^7.0.35",
+    "sirv": "^1.0.11", *
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1"
+  },
+  "devDependencies": {
+    "css-loader": "^3.6.0",
+    "node-fetch": "^2.6.1",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^7.1.1",
+    "postcss-loader": "^3.0.0",
+  }
+```
+
 ## EPISODE 1
 
 ```
