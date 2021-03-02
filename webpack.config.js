@@ -39,6 +39,20 @@ module.exports = {
             },
           },
         },
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+              }
+            },
+            {
+              loader: 'postcss-loader'
+            }
+          ]
+        },
         fileLoaderRule,
       ],
     },
@@ -73,6 +87,20 @@ module.exports = {
               dev,
             },
           },
+        },
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+              }
+            },
+            {
+              loader: 'postcss-loader'
+            }
+          ]
         },
         fileLoaderRule,
       ],

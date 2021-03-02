@@ -158,6 +158,17 @@ Sapper is in early development, and may have the odd rough edge here and there. 
 
 # COMMANDS and things
 
+## EPISODE 5
+
+package.json
+webpack.config.js
+static/tailwind.css
+postcss/*
+
+## EPISODE 4
+
+## EPISODE 3
+
 ## EPISODE 2 - short install some packages + discuss
 
 package.json

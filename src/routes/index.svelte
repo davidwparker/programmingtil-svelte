@@ -40,12 +40,17 @@
   <title>ProgrammingTIL Svelte and Sapper</title>
 </svelte:head>
 
+<a href="/users/sign-in/">
+  Sign In
+</a>
+
 <form
+  class="bg-primary-100"
   on:submit|preventDefault={handleSubmit}
   method="POST"
 >
-  <div class="rounded-md shadow-sm">
-    <div class="-mt-px relative">
+  <div>
+    <div class="-mt-px">
       <input
         aria-label="Email address"
         name="user[email]"

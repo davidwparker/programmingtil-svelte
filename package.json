@@ -6,7 +6,9 @@
     "dev": "sapper dev",
     "build": "sapper build",
     "export": "sapper export",
-    "start": "node __sapper__/build"
+    "start": "node __sapper__/build",
+    "tw:w:b": "postcss static/tailwind.css -o static/index-blue.css --config postcss/blue -w",
+    "tw:w:core": "postcss static/tailwind.css -o static/index-core.css --config postcss/core -w"
   },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^2.3.0",
