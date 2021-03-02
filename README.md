@@ -158,6 +158,8 @@ Sapper is in early development, and may have the odd rough edge here and there. 
 
 # COMMANDS and things
 
+`npm run dev -- --port 3001`
+
 ## EPISODE 5
 
 package.json
