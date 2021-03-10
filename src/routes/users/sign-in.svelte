@@ -44,13 +44,13 @@
     const { response, json } = await api.post(
       'http://localhost:3000',
       'users/sign_in',
-      { user: { email, password } }
+      { user: { email, password } },
+      { aud: 'UNKNOWN' }
     );
     if (response.status === 200) {
       success = 'Signed in!';
       email = undefined;
       password = undefined;
-      console.log(json);
       user.set(json);
     }
     else if (response.status === 401) {

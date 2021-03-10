@@ -1,5 +1,26 @@
 <script>
+  import { onMount } from 'svelte';
+  import * as api from 'shared/apis';
   import { user } from 'shared/stores';
+
+  onMount(() => {
+    user.useLocalStorage();
+    console.log($user);
+  });
+
+  async function handleSignOut() {
+    let session = { jwt: $user.jwt, aud: $user.aud };
+    const { response, json } = await api.del('http://localhost:3000', 'users/sign_out', {}, session);
+    if (response.status === 200) {
+      user.set({});
+    }
+    else if (response.status === 500) {
+      errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
+    }
+    else {
+      errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
+    }
+  }
 </script>
 
 <nav>
@@ -7,12 +28,13 @@
     <div class="">
       {#if ($user && $user.jwt)}
         <a
-        href="/TODO"
-        class="px-3 py-2 rounded-md leading-5 font-medium
-          focus:outline-none focus:text-white focus:bg-primary-300
-          text-neutral-800 hover:text-white hover:bg-primary-300
-          ml-3"
-      >
+          href="/users/sign-out/"
+          class="px-3 py-2 rounded-md leading-5 font-medium
+            focus:outline-none focus:text-white focus:bg-primary-300
+            text-neutral-800 hover:text-white hover:bg-primary-300
+            ml-3"
+          on:click|preventDefault={handleSignOut}
+        >
         Sign Out
       </a>
       {:else}
