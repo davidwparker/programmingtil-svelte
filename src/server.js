@@ -19,6 +19,7 @@ express() // You can also use Express
       session: (_req) => {
         return ({
           API_ENDPOINT: process.env.API_ENDPOINT,
+          NODE_ENV,
         });
       }
     })

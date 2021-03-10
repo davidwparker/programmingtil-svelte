@@ -160,6 +160,17 @@ Sapper is in early development, and may have the odd rough edge here and there. 
 
 `npm run dev -- --port 3001`
 
+## EPISODE 7
+
+src/components/navbar/Nav.svelte
+src/routes/_layout.svelte
+src/shared/stores.svelte
+src/routes/users/sign-in.svelte
+
+## EPISODE 6
+
+Basic styling
+
 ## EPISODE 5
 
 package.json

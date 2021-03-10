@@ -40,33 +40,16 @@
   <title>ProgrammingTIL Svelte and Sapper</title>
 </svelte:head>
 
-<nav>
-  <div class="max-w-7xl mx-auto px-2 sm:px-8 h-16 flex items-center">
-    <div class="">
-      <a
-        href="/users/sign-in/"
-        class="px-3 py-2 rounded-md leading-5 font-medium
-          focus:outline-none focus:text-white focus:bg-primary-300
-          text-neutral-800 hover:text-white hover:bg-primary-300"
-      >
-        Sign In
-      </a>
-      <a
-        href="/users/sign-up/"
-        class="px-3 py-2 rounded-md leading-5 font-medium
-          focus:outline-none focus:text-white focus:bg-primary-300
-          text-neutral-800 hover:text-white hover:bg-primary-300
-          ml-3"
-      >
-        Register
-      </a>
-    </div>
-  </div>
-</nav>
+<div class="flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8">
+  {#if success}
+    {success}
+  {/if}
+  {#if errors.length > 0}
+    {errors[0]}
+  {/if}
+</div>
 
-<div
-  class="flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8"
->
+<div class="flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8">
   <form
     class="max-w-md w-full"
     method="POST"
@@ -116,13 +99,4 @@
       </button>
     </div>
   </form>
-</div>
-
-<div>
-  {#if success}
-    {success}
-  {/if}
-  {#if errors.length > 0}
-    {errors[0]}
-  {/if}
 </div>
