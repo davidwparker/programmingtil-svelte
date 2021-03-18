@@ -162,24 +162,32 @@ Sapper is in early development, and may have the odd rough edge here and there. 
 
 ## EPISODE 9
 
+```
 .env > API_ENDPOINT
 package.json
 sign-in.svelte
 sign-up.svelte
 Nav.svelte
+. update
+```
 
 ## EPISODE 8
 
+```
 src/components/navbar/Nav.svelte
 src/routes/users/sign-in.svelte
 src/shared/stores.js
 Bugfix: sign in AUD
+```
+
 ## EPISODE 7
 
+```
 src/components/navbar/Nav.svelte
 src/routes/_layout.svelte
 src/routes/users/sign-in.svelte
 src/shared/stores.js
+```
 
 ## EPISODE 6
 
@@ -187,10 +195,12 @@ Basic styling
 
 ## EPISODE 5
 
+```
 package.json
 webpack.config.js
 static/tailwind.css
 postcss/*
+```
 
 ## EPISODE 4
 

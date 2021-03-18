@@ -12,12 +12,12 @@
   });
 
   async function handleSignOut() {
-    let session = { jwt: $user.jwt, aud: $user.aud };
+    let sess = { jwt: $user.jwt, aud: $user.aud };
     const { response, json } = await api.del(
       $session.API_ENDPOINT,
       "users/sign_out",
       {},
-      session
+      sess
     );
     if (response.status === 200) {
       user.set({});
