@@ -168,7 +168,6 @@ package.json
 sign-in.svelte
 sign-up.svelte
 Nav.svelte
-. update
 ```
 
 Sign up Vercel.
