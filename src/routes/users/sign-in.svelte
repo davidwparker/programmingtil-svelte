@@ -26,6 +26,7 @@
     email = "test@test.com";
     password = "testtest";
   }
+  console.log($session.API_ENDPOINT);
 
   if ($page.query.confirmation_token) {
     if (confirmed) {

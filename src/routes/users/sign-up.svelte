@@ -3,7 +3,7 @@
   import * as api from "shared/apis";
 
   const { session } = stores();
-
+  console.log($session.API_ENDPOINT);
   let email, password;
   let errors = [],
     submitting,

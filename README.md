@@ -158,7 +158,7 @@ Sapper is in early development, and may have the odd rough edge here and there. 
 
 # COMMANDS and things
 
-`npm run dev -- --port 3001`
+`npm run dev -- --port 5000`
 
 ## EPISODE 9
 
