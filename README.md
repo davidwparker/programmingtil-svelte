@@ -158,7 +158,14 @@ Sapper is in early development, and may have the odd rough edge here and there. 
 
 # COMMANDS and things
 
-`npm run dev -- --port 5000`
+```
+npm run dev -- --port 5000
+```
+
+## EPISODE 10
+
+sign-up.svelte
+sign-in.svelte
 
 ## EPISODE 9
 
@@ -168,7 +175,6 @@ package.json
 sign-in.svelte
 sign-up.svelte
 Nav.svelte
-. update
 ```
 
 Sign up Vercel.

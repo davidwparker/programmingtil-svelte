@@ -17,16 +17,15 @@
   export let confirmed = false,
     message = "";
   const { page, session } = stores();
-  let email, password;
+  let login, password;
   let submitting,
     success,
     errors = [];
 
   if ($session.NODE_ENV === "development") {
-    email = "test@test.com";
+    login = "test@test.com";
     password = "testtest";
   }
-  console.log($session.API_ENDPOINT);
 
   if ($page.query.confirmation_token) {
     if (confirmed) {
@@ -46,12 +45,12 @@
     const { response, json } = await api.post(
       $session.API_ENDPOINT,
       "users/sign_in",
-      { user: { email, password } },
+      { user: { login, password } },
       { aud: "UNKNOWN" }
     );
     if (response.status === 200) {
       success = "Signed in!";
-      email = undefined;
+      login = undefined;
       password = undefined;
       user.set(json);
     } else if (response.status === 401) {
@@ -92,15 +91,15 @@
     <div>
       <div class="-mt-px">
         <input
-          aria-label="Email address"
-          name="user[email]"
-          type="email"
+          aria-label="Username or Email address"
+          name="user[login]"
+          type="text"
           class="block w-full rounded-t-md
             focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10
           "
           required
-          placeholder="Email address"
-          bind:value={email}
+          placeholder="Username or Email address"
+          bind:value={login}
         />
       </div>
       <div class="-mt-px">
