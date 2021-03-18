@@ -1,39 +1,40 @@
-<script context='module'>
-  import * as api from 'shared/apis';
+<script context="module">
+  import * as api from "shared/apis";
 
-  export async function preload(page, _session) {
+  export async function preload(page, session) {
     if (page.query.confirmation_token) {
       const url = `users/confirmation?confirmation_token=${page.query.confirmation_token}`;
-      const { response, json } = await api.get('http://localhost:3000', url);
-      return { confirmed: (response.status === 200), message: json };
+      const { response, json } = await api.get(session.API_ENDPOINT, url);
+      return { confirmed: response.status === 200, message: json };
     }
   }
 </script>
 
 <script>
-  import { stores } from '@sapper/app';
-  import { user } from 'shared/stores';
+  import { stores } from "@sapper/app";
+  import { user } from "shared/stores";
 
-  export let confirmed = false, message = '';
+  export let confirmed = false,
+    message = "";
   const { page, session } = stores();
   let email, password;
-  let submitting, success, errors = [];
+  let submitting,
+    success,
+    errors = [];
 
-  if ($session.NODE_ENV === 'development') {
-    email = 'test@test.com';
-    password = 'testtest';
+  if ($session.NODE_ENV === "development") {
+    email = "test@test.com";
+    password = "testtest";
   }
 
   if ($page.query.confirmation_token) {
     if (confirmed) {
-      success = 'Your email address has been confirmed!';
-    }
-    else {
-      if (message !== '' && message.email && message.email.length >= 0) {
-        errors = [`Email ${message.email[0]}`]
-      }
-      else {
-        errors = ['Token is invalid.'];
+      success = "Your email address has been confirmed!";
+    } else {
+      if (message !== "" && message.email && message.email.length >= 0) {
+        errors = [`Email ${message.email[0]}`];
+      } else {
+        errors = ["Token is invalid."];
       }
     }
   }
@@ -42,28 +43,27 @@
     submitting = true;
     errors = [];
     const { response, json } = await api.post(
-      'http://localhost:3000',
-      'users/sign_in',
+      $session.API_ENDPOINT,
+      "users/sign_in",
       { user: { email, password } },
-      { aud: 'UNKNOWN' }
+      { aud: "UNKNOWN" }
     );
     if (response.status === 200) {
-      success = 'Signed in!';
+      success = "Signed in!";
       email = undefined;
       password = undefined;
       user.set(json);
-    }
-    else if (response.status === 401) {
+    } else if (response.status === 401) {
       success = undefined;
       if (json.error) {
         errors = [...errors, json.error];
-      }
-      else {
+      } else {
         errors = [...errors, "You can't do that, Dave."];
       }
-    }
-    else if (response.status === 500) {
-      errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
+    } else if (response.status === 500) {
+      errors = [
+        "Oops, something went wrong! How embarrassing, try again soon.",
+      ];
     }
     submitting = false;
   }

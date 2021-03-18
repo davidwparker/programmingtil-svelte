@@ -1,7 +1,10 @@
 <script>
-  import { onMount } from 'svelte';
-  import * as api from 'shared/apis';
-  import { user } from 'shared/stores';
+  import { stores } from "@sapper/app";
+  import { onMount } from "svelte";
+  import * as api from "shared/apis";
+  import { user } from "shared/stores";
+
+  const { session } = stores();
 
   onMount(() => {
     user.useLocalStorage();
@@ -10,15 +13,22 @@
 
   async function handleSignOut() {
     let session = { jwt: $user.jwt, aud: $user.aud };
-    const { response, json } = await api.del('http://localhost:3000', 'users/sign_out', {}, session);
+    const { response, json } = await api.del(
+      $session.API_ENDPOINT,
+      "users/sign_out",
+      {},
+      session
+    );
     if (response.status === 200) {
       user.set({});
-    }
-    else if (response.status === 500) {
-      errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
-    }
-    else {
-      errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
+    } else if (response.status === 500) {
+      errors = [
+        "Oops, something went wrong! How embarrassing, try again soon.",
+      ];
+    } else {
+      errors = [
+        "Oops, something went wrong! How embarrassing, try again soon.",
+      ];
     }
   }
 </script>
@@ -26,7 +36,7 @@
 <nav>
   <div class="max-w-7xl mx-auto px-2 sm:px-8 h-16 flex items-center">
     <div class="">
-      {#if ($user && $user.jwt)}
+      {#if $user && $user.jwt}
         <a
           href="/users/sign-out/"
           class="px-3 py-2 rounded-md leading-5 font-medium
@@ -35,8 +45,8 @@
             ml-3"
           on:click|preventDefault={handleSignOut}
         >
-        Sign Out
-      </a>
+          Sign Out
+        </a>
       {:else}
         <a
           href="/users/sign-in/"

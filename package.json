@@ -6,7 +6,11 @@
     "dev": "sapper dev",
     "build": "sapper build",
     "export": "sapper export",
+    "exportprod": "NODE_ENV=production npm run tw:build && sapper export",
     "start": "node __sapper__/build",
+    "tw:build": "npm run tw:core & npm run tw:b ",
+    "tw:core": "NODE_ENV=production postcss static/tailwind.css -o static/index-core.css --config postcss/core",
+    "tw:b": "NODE_ENV=production postcss static/tailwind.css -o static/index-blue.css --config postcss/blue",
     "tw:w:b": "postcss static/tailwind.css -o static/index-blue.css --config postcss/blue -w",
     "tw:w:core": "postcss static/tailwind.css -o static/index-core.css --config postcss/core -w"
   },

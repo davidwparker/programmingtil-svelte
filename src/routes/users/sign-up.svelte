@@ -1,23 +1,25 @@
 <script>
-  import * as api from 'shared/apis';
+  import { stores } from "@sapper/app";
+  import * as api from "shared/apis";
+
+  const { session } = stores();
 
   let email, password;
-  let errors = [], submitting, success;
+  let errors = [],
+    submitting,
+    success;
 
   async function handleSubmit() {
     submitting = true;
     errors = [];
-    const { response, json } = await api.post(
-      'http://localhost:3000',
-      'users',
-      { user: { email, password } }
-    );
+    const { response, json } = await api.post($session.API_ENDPOINT, "users", {
+      user: { email, password },
+    });
     if (response.status === 200) {
       success = json.message;
       email = undefined;
       password = undefined;
-    }
-    else if (response.status === 401) {
+    } else if (response.status === 401) {
       success = undefined;
       if (json.email) {
         errors = [...errors, `Email ${json.email[0]}`];
@@ -25,12 +27,12 @@
       if (json.password) {
         errors = [...errors, `Password ${json.password[0]}`];
       }
-    }
-    else if (response.status === 404) {
-      errors = ['Registration cannot be found, try again soon.'];
-    }
-    else if (response.status === 500) {
-      errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
+    } else if (response.status === 404) {
+      errors = ["Registration cannot be found, try again soon."];
+    } else if (response.status === 500) {
+      errors = [
+        "Oops, something went wrong! How embarrassing, try again soon.",
+      ];
     }
     submitting = false;
   }
