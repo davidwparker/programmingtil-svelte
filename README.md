@@ -171,6 +171,15 @@ Nav.svelte
 . update
 ```
 
+Sign up Vercel.
+Add project via Vercel > Github (authorize).
+(let fail if not "main/prod")
+Change branch (if not on main yet), for example this is on `ep9`.
+Set ENV Variables. For this one, since this is "production" (for now), we'll put on staging + production.
+We'll later setup a proper staging vs production environment on Vercel.
+
+TODO: once this episode is published, we'll be switching our main branch around.
+
 ## EPISODE 8
 
 ```
