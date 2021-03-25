@@ -162,6 +162,16 @@ Sapper is in early development, and may have the odd rough edge here and there. 
 npm run dev -- --port 5000
 ```
 
+## EPISODE 12
+
+new alerts
+new submit button
+new icons
+cmp/navbar/nav > settings link
+routes/users/sign-in > submit button
+routes/users/sign-up > submit button
+routes/users/settings
+
 ## EPISODE 10
 
 sign-up.svelte

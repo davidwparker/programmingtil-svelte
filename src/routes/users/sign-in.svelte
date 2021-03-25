@@ -13,6 +13,8 @@
 <script>
   import { stores } from "@sapper/app";
   import { user } from "shared/stores";
+  import SubmitButton from "cmp/buttons/Submit";
+  import { UiLockSolid } from "cmp/icons";
 
   export let confirmed = false,
     message = "";
@@ -117,19 +119,7 @@
     </div>
 
     <div class="mt-4">
-      <button
-        type="submit"
-        class="px-4 py-2 border border-transparent
-          focus:ring-primary focus:outline-none leading-5 font-medium rounded-md disabled:opacity-75
-          text-white bg-primary-400 active:bg-primary-700 hover:bg-primary-500 focus:bg-primary-500 "
-        disabled={submitting}
-      >
-        {#if submitting}
-          Submitting
-        {:else}
-          Submit
-        {/if}
-      </button>
+      <SubmitButton {submitting} full icon={UiLockSolid}>Sign In</SubmitButton>
     </div>
   </form>
 </div>

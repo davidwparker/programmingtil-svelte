@@ -1,9 +1,11 @@
 <script>
   import { stores } from "@sapper/app";
   import * as api from "shared/apis";
+  import SubmitButton from 'cmp/buttons/Submit';
   import {
     UiExclamationCircleSolid,
-    UiGreenCheck
+    UiGreenCheck,
+    UiLockSolid
   } from 'cmp/icons';
 
   const { session } = stores();
@@ -160,19 +162,9 @@
     </div>
 
     <div class="mt-4">
-      <button
-        type="submit"
-        class="px-4 py-2 border border-transparent
-          focus:ring-primary focus:outline-none leading-5 font-medium rounded-md disabled:opacity-75
-          text-white bg-primary-400 active:bg-primary-700 hover:bg-primary-500 focus:bg-primary-500 "
-        disabled={submitting}
-      >
-        {#if submitting}
-          Submitting
-        {:else}
-          Submit
-        {/if}
-      </button>
+      <SubmitButton {submitting} full icon={UiLockSolid}>
+        Register
+      </SubmitButton>
     </div>
   </form>
 </div>

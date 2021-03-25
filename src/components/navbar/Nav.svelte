@@ -8,7 +8,6 @@
 
   onMount(() => {
     user.useLocalStorage();
-    console.log($user);
   });
 
   async function handleSignOut() {
@@ -37,6 +36,14 @@
   <div class="max-w-7xl mx-auto px-2 sm:px-8 h-16 flex items-center">
     <div class="">
       {#if $user && $user.jwt}
+        <a
+          href="/users/settings/"
+          class="px-3 py-2 rounded-md leading-5 font-medium
+            focus:outline-none focus:text-white focus:bg-primary-300
+            text-neutral-800 hover:text-white hover:bg-primary-300"
+        >
+          Settings
+        </a>
         <a
           href="/users/sign-out/"
           class="px-3 py-2 rounded-md leading-5 font-medium
