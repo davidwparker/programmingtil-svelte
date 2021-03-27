@@ -162,8 +162,32 @@ Sapper is in early development, and may have the odd rough edge here and there. 
 npm run dev -- --port 5000
 ```
 
+## EPISODE 13
+
+Backend, and why using localStorage:
+https://github.com/waiting-for-dev/devise-jwt/issues/126
+
+tldr;
+* cannot use different domains.
+* long-term, we'll be using the same APIs with our mobile app.
+* update to check and compare/use the AUD
+
+Concerns
+* XSS
+
+```
+package.json
+src/components/navbar/Nav.svelte
+src/routes/_layout.svelte
+src/routes/users/settings.svelte
+src/routes/users/sign-in.svelte
+src/shared/helpers.js
+src/shared/stores.js
+```
+
 ## EPISODE 12
 
+```
 new alerts
 new submit button
 new icons
@@ -171,11 +195,14 @@ cmp/navbar/nav > settings link
 routes/users/sign-in > submit button
 routes/users/sign-up > submit button
 routes/users/settings
+```
 
 ## EPISODE 10
 
+```
 sign-up.svelte
 sign-in.svelte
+```
 
 ## EPISODE 9
 

@@ -1,6 +1,7 @@
 <script>
+  import { onMount } from 'svelte';
   import { goto, stores } from '@sapper/app';
-  import { user } from "shared/stores";
+  import { aud, user } from "shared/stores";
   import * as api from 'shared/apis';
   import AlertErrors from 'cmp/alerts/Errors';
   import AlertSuccess from 'cmp/alerts/Success';
@@ -8,9 +9,14 @@
   import { UiLockSolid } from 'cmp/icons';
 
   const { page, session } = stores();
-  let displayName = $user.user.displayName;
-  let email = $user.user.email;
-  let username = $user.user.username;
+  let displayName;
+  let email;
+  let username;
+  onMount(() => {
+    displayName = $user.user.displayName;
+    email = $user.user.email;
+    username = $user.user.username;
+  });
   let errors = [], submitting, submittingPw, success;
 
   const inputKlass = 'appearance-none rounded-md relative block w-full px-3 py-2 mt-1 \
@@ -47,7 +53,7 @@
           display_name: displayName,
         }
       },
-      { jwt: $user.jwt, aud: $user.aud }
+      { jwt: $user.jwt, aud: $aud }
     );
     if (response.status === 200) {
       success = json.message;

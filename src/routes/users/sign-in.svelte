@@ -11,8 +11,8 @@
 </script>
 
 <script>
-  import { stores } from "@sapper/app";
-  import { user } from "shared/stores";
+  import { goto, stores } from "@sapper/app";
+  import { aud, browser, ip, os, user } from "shared/stores";
   import SubmitButton from "cmp/buttons/Submit";
   import { UiLockSolid } from "cmp/icons";
 
@@ -44,17 +44,25 @@
   async function handleSubmit() {
     submitting = true;
     errors = [];
+    try {
+      const jsResponse = await fetch('https://jsonip.com/');
+      const jsip = await jsResponse.json();
+      ip.set(jsip.ip);
+    } catch (error) {
+      // Ignore if this service fails
+    }
     const { response, json } = await api.post(
       $session.API_ENDPOINT,
       "users/sign_in",
-      { user: { login, password } },
-      { aud: "UNKNOWN" }
+      { user: { login, password }, browser: $browser, ip: $ip, os: $os },
+      { aud: $aud }
     );
     if (response.status === 200) {
       success = "Signed in!";
       login = undefined;
       password = undefined;
       user.set(json);
+      goto('/')
     } else if (response.status === 401) {
       success = undefined;
       if (json.error) {

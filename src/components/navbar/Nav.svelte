@@ -1,5 +1,5 @@
 <script>
-  import { stores } from "@sapper/app";
+  import { goto, stores } from "@sapper/app";
   import { onMount } from "svelte";
   import * as api from "shared/apis";
   import { user } from "shared/stores";
@@ -11,7 +11,7 @@
   });
 
   async function handleSignOut() {
-    let sess = { jwt: $user.jwt, aud: $user.aud };
+    let sess = { jwt: $user.jwt };
     const { response, json } = await api.del(
       $session.API_ENDPOINT,
       "users/sign_out",
@@ -20,6 +20,7 @@
     );
     if (response.status === 200) {
       user.set({});
+      goto('/');
     } else if (response.status === 500) {
       errors = [
         "Oops, something went wrong! How embarrassing, try again soon.",
