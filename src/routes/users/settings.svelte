@@ -1,14 +1,14 @@
 <script>
   import { onMount } from 'svelte';
-  import { goto, stores } from '@sapper/app';
-  import { aud, user } from "shared/stores";
-  import * as api from 'shared/apis';
-  import AlertErrors from 'cmp/alerts/Errors';
-  import AlertSuccess from 'cmp/alerts/Success';
-  import SubmitButton from 'cmp/buttons/Submit';
-  import { UiLockSolid } from 'cmp/icons';
+  import { goto } from "$app/navigation";
+  import { page, session } from "$app/stores";
+  import { aud, user } from "$lib/shared/stores";
+  import * as api from '$lib/shared/apis';
+  import AlertErrors from '$lib/components/alerts/Errors.svelte';
+  import AlertSuccess from '$lib/components/alerts/Success.svelte';
+  import SubmitButton from '$lib/components/buttons/Submit.svelte';
+  import { UiLockSolid } from '$lib/components/icons';
 
-  const { page, session } = stores();
   let displayName;
   let email;
   let username;

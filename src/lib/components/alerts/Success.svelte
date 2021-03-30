@@ -1,5 +1,5 @@
 <script>
-  import { UiGreenCheck } from 'cmp/icons';
+  import { UiGreenCheck } from '$lib/components/icons';
 
   export let success;
   export let title = 'Success!';

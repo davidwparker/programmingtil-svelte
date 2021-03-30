@@ -1,8 +1,10 @@
 <script>
   import { onMount } from 'svelte';
-  import { audBuilder, browserDetector } from 'shared/helpers';
-  import { aud, browser, os } from 'shared/stores';
-  import Nav from 'cmp/navbar/Nav';
+  import { audBuilder, browserDetector } from '$lib/shared/helpers';
+  import "../tailwind.css";
+
+  import { aud, browser, os } from '$lib/shared/stores';
+  import Nav from '$lib/components/navbar/Nav.svelte';
 
   onMount(() => {
     if (navigator && window) {

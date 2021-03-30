@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { UiRefreshOutline } from 'cmp/icons';
+  import { UiRefreshOutline } from '$lib/components/icons/index.js';
 
   const dispatch = createEventDispatcher();
 

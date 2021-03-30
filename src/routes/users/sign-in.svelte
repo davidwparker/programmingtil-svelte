@@ -1,45 +1,71 @@
 <script context="module">
-  import * as api from "shared/apis";
-
-  export async function preload(page, session) {
-    if (page.query.confirmation_token) {
-      const url = `users/confirmation?confirmation_token=${page.query.confirmation_token}`;
-      const { response, json } = await api.get(session.API_ENDPOINT, url);
-      return { confirmed: response.status === 200, message: json };
-    }
-  }
+  // NOTES:
+  // First attempt required an empty {} return otherwise this:
+  // Docs:
+  // If load returns nothing, SvelteKit will  to other routes until something responds,
+  // or will respond with a generic 404.
+  //
+  // Second attempt made duplicate/multiple requests due to this:
+  // Docs:
+  // This function runs both during server-side rendering and in the client,...
+  //
+  // so I went with just waiting until mounted to make the API request, as it's not idempotent.
+  // import * as api from "$lib/shared/apis.js";
+  // export async function load({ page, session }) {
+  //   if (page.query.get('confirmation_token')) {
+  //     const url = `users/confirmation?confirmation_token=${page.query.get('confirmation_token')}`;
+  //     const { response, json } = await api.get(session.API_ENDPOINT, url);
+  //     return { confirmed: response.status === 200, message: json };
+  //   }
+  //   else {
+  //     return {};
+  //   }
+  // }
 </script>
 
 <script>
-  import { goto, stores } from "@sapper/app";
-  import { aud, browser, ip, os, user } from "shared/stores";
-  import SubmitButton from "cmp/buttons/Submit";
-  import { UiLockSolid } from "cmp/icons";
+  import { onMount } from 'svelte';
+  import { dev } from '$app/env';
+  import { goto } from "$app/navigation";
+  import { page, session } from "$app/stores";
+  import * as api from "$lib/shared/apis.js";
+  import { aud, browser, ip, os, user } from "$lib/shared/stores.js";
+  import SubmitButton from "$lib/components/buttons/Submit.svelte";
+  import { UiLockSolid } from "$lib/components/icons";
 
-  export let confirmed = false,
-    message = "";
-  const { page, session } = stores();
+  let confirmed = false, message = "";
   let login, password;
   let submitting,
     success,
     errors = [];
 
-  if ($session.NODE_ENV === "development") {
+  if (dev) {
     login = "test@test.com";
     password = "testtest";
   }
 
-  if ($page.query.confirmation_token) {
-    if (confirmed) {
-      success = "Your email address has been confirmed!";
-    } else {
-      if (message !== "" && message.email && message.email.length >= 0) {
-        errors = [`Email ${message.email[0]}`];
+  // console.log($page.query.get('confirmation_token'))
+  async function checkConfirmation() {
+    if ($page.query.get('confirmation_token')) {
+      const url = `users/confirmation?confirmation_token=${$page.query.get('confirmation_token')}`;
+      const { response, json } = await api.get($session.API_ENDPOINT, url);
+      confirmed = response.status === 200;
+      message = json;
+
+      if (confirmed) {
+        success = "Your email address has been confirmed!";
       } else {
-        errors = ["Token is invalid."];
+        if (message !== "" && message.email && message.email.length >= 0) {
+          errors = [`Email ${message.email[0]}`];
+        } else {
+          errors = ["Token is invalid."];
+        }
       }
     }
   }
+  onMount(() => {
+    checkConfirmation();
+  });
 
   async function handleSubmit() {
     submitting = true;

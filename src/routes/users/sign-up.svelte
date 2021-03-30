@@ -1,14 +1,13 @@
 <script>
-  import { stores } from "@sapper/app";
-  import * as api from "shared/apis";
-  import SubmitButton from 'cmp/buttons/Submit';
+  import { session } from "$app/stores";
+  import * as api from "$lib/shared/apis";
+  import SubmitButton from "$lib/components/buttons/Submit.svelte";
   import {
     UiExclamationCircleSolid,
     UiGreenCheck,
     UiLockSolid
-  } from 'cmp/icons';
+  } from '$lib/components/icons';
 
-  const { session } = stores();
   let email, password, username;
   let errors = [],
     submitting,

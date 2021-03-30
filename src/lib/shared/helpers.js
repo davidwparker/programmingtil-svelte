@@ -1,4 +1,4 @@
-import sha256 from 'crypto-js/sha256';
+import sha256 from 'crypto-js/sha256.js';
 
 export function audBuilder(bd) {
   const version = parseInt(bd.browser.version);

@@ -1,5 +1,5 @@
 <script>
-  import { UiRedX } from 'cmp/icons';
+  import { UiRedX } from '$lib/components/icons';
 
   export let errors;
   export let title = 'There were errors with your submission';

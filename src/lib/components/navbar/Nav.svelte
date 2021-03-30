@@ -1,10 +1,9 @@
 <script>
-  import { goto, stores } from "@sapper/app";
+  import { goto } from "$app/navigation";
+  import { session } from "$app/stores";
   import { onMount } from "svelte";
-  import * as api from "shared/apis";
-  import { user } from "shared/stores";
-
-  const { session } = stores();
+  import * as api from "$lib/shared/apis";
+  import { user } from "$lib/shared/stores";
 
   onMount(() => {
     user.useLocalStorage();
@@ -36,6 +35,8 @@
 <nav>
   <div class="max-w-7xl mx-auto px-2 sm:px-8 h-16 flex items-center">
     <div class="">
+      <a href="/" class="">Home</a>
+      <a href="/about">About</a>
       {#if $user && $user.jwt}
         <a
           href="/users/settings/"

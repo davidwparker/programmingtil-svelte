@@ -10,3 +10,6 @@ yarn-error.log
 /build/
 /.sessions/
 .env
+.svelte
+.vercel_build_output
+/tmp/
