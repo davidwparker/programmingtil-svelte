@@ -16,7 +16,7 @@
   });
 </script>
 
-<main class="bg-primary-100 h-screen">
+<main class="bg-primary-100 min-h-screen">
   <Nav />
   <slot></slot>
 </main>
