@@ -11,6 +11,32 @@
   <link rel='stylesheet' href='/index-blue.css' /> -->
 
   %svelte.head%
+  <style>
+    /* Markdown CSS here so it's not automatically removed (due to being from user markdown) */
+    .markdown > h1 {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+    }
+    .markdown > h2 {
+      font-size: 1.25rem;
+      margin-top: 1rem;
+    }
+    .markdown > h3 {
+      font-size: 1.125rem;
+      margin-top: 1rem;
+    }
+    .markdown > p {
+      margin-top: 1rem;
+    }
+    .markdown > ol {
+      list-style: decimal;
+      margin-left: 1.125em;
+    }
+    .markdown > ul {
+      list-style: inherit;
+      margin-left: 1.125em;
+    }
+  </style>
 </head>
 <body>
   <div id="svelte">%svelte.body%</div>
