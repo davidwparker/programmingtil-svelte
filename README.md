@@ -4,6 +4,32 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 15
+
+``` ruby
+# Update Rails post_policy: if didn't already
+# Users can only create up to 3 posts
+def create?
+  # user.posts.size < 3
+  true
+end
+```
+
+```
+package.json
+src/lib/components/navbar/Nav.svelte
+src/routes/index.svelte
+src/routes/users/settings.svelte
+```
+
+Thanks to @flayks and @mushineesan on Discord for helping me with DOMPurify.
+
+
+* Prettier
+* Nav = klasses
+* Settings = goto if no $user
+* index = transition, create form, edit form, delete post
+
 ## EPISODE 14
 
 Load fake DB

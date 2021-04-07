@@ -5,6 +5,11 @@
   import * as api from "$lib/shared/apis";
   import { user } from "$lib/shared/stores";
 
+  const klasses =
+    "px-3 py-2 rounded-md leading-5 font-medium \
+    focus:outline-none focus:text-white focus:bg-primary-300 \
+    text-neutral-800 hover:text-white hover:bg-primary-300";
+
   onMount(() => {
     user.useLocalStorage();
   });
@@ -19,7 +24,7 @@
     );
     if (response.status === 200) {
       user.set({});
-      goto('/');
+      goto("/");
     } else if (response.status === 500) {
       errors = [
         "Oops, something went wrong! How embarrassing, try again soon.",
@@ -35,45 +40,20 @@
 <nav>
   <div class="max-w-7xl mx-auto px-2 sm:px-8 h-16 flex items-center">
     <div class="">
-      <a href="/" class="">Home</a>
-      <a href="/about">About</a>
+      <a href="/" class={klasses}>Home</a>
+      <a href="/about" class="{klasses} ml-1">About</a>
       {#if $user && $user.jwt}
-        <a
-          href="/users/settings/"
-          class="px-3 py-2 rounded-md leading-5 font-medium
-            focus:outline-none focus:text-white focus:bg-primary-300
-            text-neutral-800 hover:text-white hover:bg-primary-300"
-        >
-          Settings
-        </a>
+        <a href="/users/settings/" class="{klasses} ml-1"> Settings </a>
         <a
           href="/users/sign-out/"
-          class="px-3 py-2 rounded-md leading-5 font-medium
-            focus:outline-none focus:text-white focus:bg-primary-300
-            text-neutral-800 hover:text-white hover:bg-primary-300
-            ml-3"
+          class="{klasses} ml-1"
           on:click|preventDefault={handleSignOut}
         >
           Sign Out
         </a>
       {:else}
-        <a
-          href="/users/sign-in/"
-          class="px-3 py-2 rounded-md leading-5 font-medium
-            focus:outline-none focus:text-white focus:bg-primary-300
-            text-neutral-800 hover:text-white hover:bg-primary-300"
-        >
-          Sign In
-        </a>
-        <a
-          href="/users/sign-up/"
-          class="px-3 py-2 rounded-md leading-5 font-medium
-            focus:outline-none focus:text-white focus:bg-primary-300
-            text-neutral-800 hover:text-white hover:bg-primary-300
-            ml-3"
-        >
-          Register
-        </a>
+        <a href="/users/sign-in/" class="{klasses} ml-1"> Sign In </a>
+        <a href="/users/sign-up/" class="{klasses} ml-1"> Register </a>
       {/if}
     </div>
   </div>
