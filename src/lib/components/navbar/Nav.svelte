@@ -3,24 +3,24 @@
   import { session } from "$app/stores";
   import { onMount } from "svelte";
   import * as api from "$lib/shared/apis";
-  import { user } from "$lib/shared/stores";
+  import { aud, user } from "$lib/shared/stores";
 
   const klasses =
     "px-3 py-2 rounded-md leading-5 font-medium \
     focus:outline-none focus:text-white focus:bg-primary-300 \
     text-neutral-800 hover:text-white hover:bg-primary-300";
+  let errors;
 
   onMount(() => {
     user.useLocalStorage();
   });
 
   async function handleSignOut() {
-    let sess = { jwt: $user.jwt };
     const { response, json } = await api.del(
       $session.API_ENDPOINT,
       "users/sign_out",
-      {},
-      sess
+      { creds: true },
+      { aud: $aud }
     );
     if (response.status === 200) {
       user.set({});
@@ -42,7 +42,7 @@
     <div class="">
       <a href="/" class={klasses}>Home</a>
       <a href="/about" class="{klasses} ml-1">About</a>
-      {#if $user && $user.jwt}
+      {#if $user?.user}
         <a href="/users/settings/" class="{klasses} ml-1"> Settings </a>
         <a
           href="/users/sign-out/"

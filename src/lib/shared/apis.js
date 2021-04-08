@@ -10,10 +10,15 @@ async function send({ method, path, data, session, base }) {
   const opts = { method, headers: {} };
 
   if (data) {
+    if (data.creds) {
+      opts.credentials = "include";
+      delete data.creds;
+    }
     if (!data.type) {
       opts.headers["Content-Type"] = "application/json";
       opts.body = JSON.stringify(data);
-    } else if (data.type === "formData") {
+    }
+    if (data.type === "formData") {
       // TODO: refactor this to work better for file uploads
       const formData = new FormData();
       formData.append("image", data.image[0]);

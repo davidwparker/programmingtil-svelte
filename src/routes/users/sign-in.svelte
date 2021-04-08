@@ -24,8 +24,8 @@
 </script>
 
 <script>
-  import { onMount } from 'svelte';
-  import { dev } from '$app/env';
+  import { onMount } from "svelte";
+  import { dev } from "$app/env";
   import { goto } from "$app/navigation";
   import { page, session } from "$app/stores";
   import * as api from "$lib/shared/apis.js";
@@ -33,7 +33,8 @@
   import SubmitButton from "$lib/components/buttons/Submit.svelte";
   import { UiLockSolid } from "$lib/components/icons";
 
-  let confirmed = false, message = "";
+  let confirmed = false,
+    message = "";
   let login, password;
   let submitting,
     success,
@@ -46,8 +47,10 @@
 
   // console.log($page.query.get('confirmation_token'))
   async function checkConfirmation() {
-    if ($page.query.get('confirmation_token')) {
-      const url = `users/confirmation?confirmation_token=${$page.query.get('confirmation_token')}`;
+    if ($page.query.get("confirmation_token")) {
+      const url = `users/confirmation?confirmation_token=${$page.query.get(
+        "confirmation_token"
+      )}`;
       const { response, json } = await api.get($session.API_ENDPOINT, url);
       confirmed = response.status === 200;
       message = json;
@@ -71,7 +74,7 @@
     submitting = true;
     errors = [];
     try {
-      const jsResponse = await fetch('https://jsonip.com/');
+      const jsResponse = await fetch("https://jsonip.com/");
       const jsip = await jsResponse.json();
       ip.set(jsip.ip);
     } catch (error) {
@@ -80,7 +83,13 @@
     const { response, json } = await api.post(
       $session.API_ENDPOINT,
       "users/sign_in",
-      { user: { login, password }, browser: $browser, ip: $ip, os: $os },
+      {
+        user: { login, password },
+        browser: $browser,
+        ip: $ip,
+        os: $os,
+        creds: true,
+      },
       { aud: $aud }
     );
     if (response.status === 200) {
@@ -88,7 +97,7 @@
       login = undefined;
       password = undefined;
       user.set(json);
-      goto('/')
+      goto("/");
     } else if (response.status === 401) {
       success = undefined;
       if (json.error) {

@@ -23,7 +23,7 @@ export const createWritableStore = (key, startValue) => {
 
 export const user = createWritableStore('user', {});
 
-// JWT-related
+// auth-related
 export const aud = writable('UNKNOWN');
 export const browser = writable('UNKNOWN');
 export const ip = writable('UNKNOWN');

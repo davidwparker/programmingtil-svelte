@@ -62,8 +62,9 @@
           username,
           display_name: displayName,
         },
+        creds: true,
       },
-      { jwt: $user.jwt, aud: $aud }
+      { aud: $aud }
     );
     if (response.status === 200) {
       success = json.message;

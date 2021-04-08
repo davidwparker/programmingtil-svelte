@@ -4,6 +4,16 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 16 - Cookie Authentication
+
+```
+src/lib/components/navbar/Nav.svelte
+src/lib/shared/apis.js
+src/routes/index.svelte
+src/routes/users/settings.svelte
+src/routes/users/sign-in.svelte
+```
+
 ## EPISODE 15
 
 ``` ruby

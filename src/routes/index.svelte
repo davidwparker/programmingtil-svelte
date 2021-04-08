@@ -1,7 +1,7 @@
 <script context="module">
   import * as api from "$lib/shared/apis";
 
-  export async function load({ page, session }) {
+  export async function load({ session }) {
     const url = `api/v1/posts`;
     const { response, json } = await api.get(session.API_ENDPOINT, url);
     if (response.status === 200) {
@@ -17,7 +17,7 @@
 </script>
 
 <script>
-  import DOMPurify from 'isomorphic-dompurify';
+  import DOMPurify from "isomorphic-dompurify";
   import snarkdown from "snarkdown";
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
@@ -37,7 +37,7 @@
   let errors = [],
     submitting,
     success;
-  let title, content, published_at;
+  let title = '', content = '', published_at;
 
   onMount(() => {
     if ($user.user) {
@@ -57,8 +57,9 @@
           content: post.attributes.content,
           published_at,
         },
+        creds: true,
       },
-      { jwt: $user.jwt, aud: $aud }
+      { aud: $aud }
     );
     if (response.status === 200) {
       title = undefined;
@@ -70,7 +71,7 @@
       response.status === 404 ||
       response.status === 406
     ) {
-      errors = json.meta.message;
+      errors = [json?.message || json?.error];
     } else if (response.status === 500) {
       errors = [
         "Oops, something went wrong! How embarrassing, try again soon.",
@@ -85,8 +86,8 @@
     const { response, json } = await api.del(
       $session.API_ENDPOINT,
       `api/v1/posts/${post.id}`,
-      {},
-      { jwt: $user.jwt, aud: $aud }
+      { creds: true },
+      { aud: $aud }
     );
     if (response.status === 200) {
       posts = posts.reduce((accum, p) => {
@@ -101,7 +102,7 @@
       response.status === 404 ||
       response.status === 406
     ) {
-      errors = json.meta.message;
+      errors = [json?.message || json?.error];
     } else if (response.status === 500) {
       errors = [
         "Oops, something went wrong! How embarrassing, try again soon.",
@@ -122,8 +123,9 @@
           content,
           published_at,
         },
+        creds: true,
       },
-      { jwt: $user.jwt, aud: $aud }
+      { aud: $aud }
     );
     if (response.status === 200) {
       title = undefined;
@@ -136,7 +138,7 @@
       response.status === 404 ||
       response.status === 406
     ) {
-      errors = json.meta.message;
+      errors = [json?.message || json?.error];
     } else if (response.status === 500) {
       errors = [
         "Oops, something went wrong! How embarrassing, try again soon.",
@@ -147,11 +149,11 @@
 </script>
 
 <svelte:head>
-  <title>ProgrammingTIL Svelte and Sapper</title>
+  <title>ProgrammingTIL Svelte and SvelteKit</title>
 </svelte:head>
 
 <div class="max-w-sm mx-auto py-6">
-  {#if $user && !loading}
+  {#if $user?.user && !loading}
     {#if success || errors.length > 0}
       <div class="mb-3">
         <AlertSuccess {success} />
@@ -343,7 +345,9 @@
               {#if post.expand}
                 {@html DOMPurify.sanitize(snarkdown(post.attributes.content))}
               {:else}
-                {@html DOMPurify.sanitize(snarkdown(post.attributes.content.substring(0, 80)))}
+                {@html DOMPurify.sanitize(
+                  snarkdown(post.attributes.content.substring(0, 80))
+                )}
               {/if}
             </p>
           </div>
