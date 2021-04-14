@@ -1,10 +1,23 @@
-// const vercel = require('@sveltejs/adapter-vercel');
-const static = require('@sveltejs/adapter-static');
+const sveltePreprocess = require("svelte-preprocess");
+const vercel = require("@sveltejs/adapter-vercel");
+const pkg = require("./package.json");
 
 module.exports = {
+  preprocess: [
+    sveltePreprocess({
+      defaults: {
+        style: "postcss",
+      },
+      postcss: true,
+    }),
+  ],
   kit: {
-    // adapter: vercel(),
-    adapter: static(),
+    adapter: vercel(),
     target: "#svelte",
+    vite: {
+      ssr: {
+        noExternal: Object.keys(pkg.dependencies || {}),
+      },
+    },
   },
 };

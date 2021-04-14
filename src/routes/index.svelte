@@ -1,7 +1,7 @@
 <script context="module">
   import * as api from "$lib/shared/apis";
 
-  export async function load({ page, session }) {
+  export async function load({ session }) {
     const url = `api/v1/posts`;
     const { response, json } = await api.get(session.API_ENDPOINT, url);
     if (response.status === 200) {
@@ -17,7 +17,7 @@
 </script>
 
 <script>
-  import DOMPurify from 'isomorphic-dompurify';
+  // import DOMPurify from 'isomorphic-dompurify';
   import snarkdown from "snarkdown";
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
@@ -302,30 +302,29 @@
                   post.expand = !post.expand;
                 }}
               >
-                {#if !post.expand}
-                  <span class="absolute inset-0" aria-hidden="true" />
-                {/if}
                 <p class="text-sm font-medium text-gray-900 truncate">
-                  User {post.attributes.userId}
-                  {#if $user?.user?.id === post.attributes.userId}
-                    <input
-                      type="button"
-                      value="edit"
-                      on:click={() => {
-                        post.edit = !post.edit;
-                      }}
-                    />
-                    <input
-                      type="button"
-                      value="delete"
-                      on:click={handleDestroy(post)}
-                    />
-                  {/if}
-                </p>
-                <p class="text-sm text-gray-500 truncate">
                   {post.attributes.title}
                 </p>
               </a>
+              <p class="text-sm text-gray-500 truncate">
+                <a href="/users/{post.attributes.user.slug}" sveltekit:prefetch>
+                  Posted by {post.attributes.user.displayName}
+                </a>
+                {#if $user?.user?.id === post.attributes.user.id}
+                  <input
+                    type="button"
+                    value="edit"
+                    on:click={() => {
+                      post.edit = !post.edit;
+                    }}
+                  />
+                  <input
+                    type="button"
+                    value="delete"
+                    on:click={handleDestroy(post)}
+                  />
+                {/if}
+              </p>
             </div>
             <time
               datetime={post.attributes.publishedAt}
@@ -341,9 +340,11 @@
                 : 'line-clamp-2'} text-sm text-gray-600 overflow-x-hidden markdown"
             >
               {#if post.expand}
-                {@html DOMPurify.sanitize(snarkdown(post.attributes.content))}
+                <!-- {@html DOMPurify.sanitize(snarkdown(post.attributes.content))} -->
+                {@html snarkdown(post.attributes.content)}
               {:else}
-                {@html DOMPurify.sanitize(snarkdown(post.attributes.content.substring(0, 80)))}
+                <!-- {@html DOMPurify.sanitize(snarkdown(post.attributes.content.substring(0, 80)))} -->
+                {@html snarkdown(post.attributes.content.substring(0, 80))}
               {/if}
             </p>
           </div>

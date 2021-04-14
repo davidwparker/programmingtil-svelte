@@ -4,6 +4,21 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 17 - friendly URLs (named routes)
+
+```
+#	modified:   README.md
+#	modified:   package-lock.json
+#	modified:   package.json
+#	modified:   src/app.html
+#	modified:   src/routes/$error.svelte
+#	modified:   src/routes/index.svelte
+#	new file:   src/routes/users/[slug].svelte
+#	modified:   svelte.config.cjs
+```
+
+## EPISODE 16 - cookies
+
 ## EPISODE 15
 
 ``` ruby
