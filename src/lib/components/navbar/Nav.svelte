@@ -10,8 +10,10 @@
     focus:outline-none focus:text-white focus:bg-primary-300 \
     text-neutral-800 hover:text-white hover:bg-primary-300";
 
+  let loading = true;
   onMount(() => {
     user.useLocalStorage();
+    loading = false;
   });
 
   async function handleSignOut() {
@@ -23,8 +25,8 @@
       sess
     );
     if (response.status === 200) {
+      await goto("/");
       user.set({});
-      goto("/");
     } else if (response.status === 500) {
       errors = [
         "Oops, something went wrong! How embarrassing, try again soon.",
@@ -42,7 +44,7 @@
     <div class="">
       <a href="/" class={klasses}>Home</a>
       <a href="/about" class="{klasses} ml-1">About</a>
-      {#if $user && $user.jwt}
+      {#if $user.jwt && !loading}
         <a href="/users/settings/" class="{klasses} ml-1"> Settings </a>
         <a
           href="/users/sign-out/"
@@ -51,7 +53,7 @@
         >
           Sign Out
         </a>
-      {:else}
+      {:else if !loading}
         <a href="/users/sign-in/" class="{klasses} ml-1"> Sign In </a>
         <a href="/users/sign-up/" class="{klasses} ml-1"> Register </a>
       {/if}

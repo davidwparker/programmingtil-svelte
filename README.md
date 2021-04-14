@@ -4,6 +4,15 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 18 - Simple Protected Layout pages
+
+```
+#	new file:   src/lib/components/layouts/ProtectedLayout.svelte
+#	modified:   src/lib/components/navbar/Nav.svelte
+#	modified:   src/routes/about.svelte
+#	modified:   src/routes/users/settings.svelte
+```
+
 ## EPISODE 17 - friendly URLs (named routes)
 
 ```
