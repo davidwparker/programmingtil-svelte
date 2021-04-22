@@ -296,11 +296,9 @@
           <div class="flex justify-between space-x-3">
             <div class="min-w-0 flex-1">
               <a
-                href="/"
+                href="/posts/{post.attributes.slug}"
                 class="block focus:outline-none"
-                on:click|preventDefault={() => {
-                  post.expand = !post.expand;
-                }}
+                sveltekit:prefetch
               >
                 <p class="text-sm font-medium text-gray-900 truncate">
                   {post.attributes.title}
@@ -337,7 +335,10 @@
             <p
               class="{post.expand
                 ? ''
-                : 'line-clamp-2'} text-sm text-gray-600 overflow-x-hidden markdown"
+                : 'line-clamp-2'} text-sm text-gray-600 overflow-x-hidden cursor-pointer markdown"
+              on:click|preventDefault={() => {
+                post.expand = !post.expand;
+              }}
             >
               {#if post.expand}
                 <!-- {@html DOMPurify.sanitize(snarkdown(post.attributes.content))} -->
@@ -347,6 +348,9 @@
                 {@html snarkdown(post.attributes.content.substring(0, 80))}
               {/if}
             </p>
+          </div>
+          <div class="mt-1 text-sm text-gray-500">
+            {post.attributes.commentsCount} comments
           </div>
         {/if}
       </li>

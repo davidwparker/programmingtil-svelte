@@ -4,6 +4,15 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 19 - Post Slug and Display Comments
+
+```
+# modified:   src/routes/index.svelte
+# new file:   src/routes/posts/[slug].svelte
+# modified:   src/routes/users/[slug].svelte
+# modified:   src/routes/users/sign-in.svelte
+```
+
 ## EPISODE 18 - Simple Protected Layout pages
 
 ```

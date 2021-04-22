@@ -44,7 +44,6 @@
     password = "testtest";
   }
 
-  // console.log($page.query.get('confirmation_token'))
   async function checkConfirmation() {
     if ($page.query.get('confirmation_token')) {
       const url = `users/confirmation?confirmation_token=${$page.query.get('confirmation_token')}`;

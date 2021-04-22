@@ -10,8 +10,6 @@
           localUser: json.data,
         },
       };
-    } else {
-      return { props: { localUser: [] } };
     }
   }
 </script>
