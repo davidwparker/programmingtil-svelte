@@ -84,3 +84,12 @@ export function browserDetector(navigator, window) {
   };
   return module;
 }
+
+/*
+ * Given a word and count, pluralize the word.
+ * Optionally, include withCount = false to not include the # in the returned string
+ */
+export function pluralize(word, count, withCount = true) {
+  const out = (count > 1 || count === 0) ? `${word}s` : word;
+  return withCount ? `${count} ${out}` : out;
+}

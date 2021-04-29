@@ -1,8 +1,9 @@
 <script context="module">
-  import * as api from "$lib/shared/apis";
+  import * as api from '$lib/shared/apis';
 
   export async function load({ page, session }) {
-    const url = `api/v1/posts/${page.params.slug}`;
+    const all = page.query.get('comments') === 'true';
+    const url = `api/v1/posts/${page.params.slug}${all ? '?all=true' : ''}`;
     const { response, json } = await api.get(session.API_ENDPOINT, url);
     if (response.status === 200) {
       return {
@@ -15,20 +16,45 @@
 </script>
 
 <script>
-  import { session } from "$app/stores";
-  import { onMount } from "svelte";
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
+  import AlertErrors from '$lib/components/alerts/Errors.svelte';
+  import AlertSuccess from '$lib/components/alerts/Success.svelte';
+  import CommentCard from '$lib/app/comments/CommentCard.svelte';
+  import CommentForm from '$lib/app/comments/CommentForm.svelte';
+  import PostCard from '$lib/app/posts/PostCard.svelte';
+  import PostForm from '$lib/app/posts/PostForm.svelte';
 
   export let post;
 
-  let comments = [];
+  let commentable = { id: post.id, type: 'Post' };
+  let errors = [],
+    success,
+    showForm = false;
 
-  onMount(async () => {
-    const url = `api/v1/comments?commentable_type=Post&commentable_id=${post.id}`;
-    const { response, json } = await api.get($session.API_ENDPOINT, url);
-    if (response.status === 200) {
-      comments = json.data;
-    }
-  });
+  function handleDestroyPost() {
+    setTimeout(() => {
+      goto('/');
+    }, 1000);
+  }
+
+  // TODO: This to come later
+  function handleDestroy(event) {
+    const comment = event.detail;
+    post.attributes.comments.data = post.attributes.comments.data.reduce((accum, c) => {
+      if (c.id !== comment.id) {
+        accum.push(c);
+      }
+      return accum;
+    }, []);
+  }
+
+  function handleSave(event) {
+    const data = event.detail;
+    post.attributes.comments.data = [data, ...post.attributes.comments.data];
+    post.attributes.commentsCount += 1;
+    showForm = !showForm;
+  }
 </script>
 
 <svelte:head>
@@ -36,29 +62,72 @@
 </svelte:head>
 
 <div class="max-w-sm mx-auto py-6">
-  <div>
-    Post ID: {post.id}
-  </div>
-  <div>
-    Title: {post.attributes.title}
-  </div>
-  <div>
-    Posted by: <a href="/users/{post.attributes.user.slug}"
-      >{post.attributes.user.displayName}</a
-    >
-  </div>
-  {#each comments as comment}
-    <div>
-      {comment.attributes.body}
+  {#if success || errors.length > 0}
+    <div class="mb-3">
+      <AlertSuccess {success} />
+      <AlertErrors {errors} />
     </div>
+  {/if}
+  <div class="bg-white py-5 px-4 shadow sm:rounded-md sm:overflow-hidden">
+    {#if post.edit}
+      <PostForm
+        type="update"
+        bind:post
+        bind:errors
+        bind:success
+        on:saved={() => (post.edit = !post.edit)}
+        on:cancel={() => (post.edit = !post.edit)}
+      />
+    {:else}
+      <PostCard bind:post bind:errors bind:success on:destroy={handleDestroyPost} />
+    {/if}
+  </div>
+  <div class="mt-6">
+    <input
+      type="button"
+      class="px-3 py-2 rounded-md leading-5 font-medium mb-6 cursor-pointer
+        focus:outline-none focus:text-white focus:bg-primary-300
+      text-neutral-800 hover:text-white hover:bg-primary-300"
+      value="New Comment"
+      on:click={() => {
+        showForm = !showForm;
+      }}
+    />
+    {#if showForm}
+      <CommentForm
+        type="new"
+        bind:commentable
+        bind:errors
+        bind:success
+        on:saved={handleSave}
+        on:cancel={() => (showForm = !showForm)}
+      />
+    {/if}
+  </div>
+  <ul class="divide-y divide-gray-200 shadow sm:rounded-md sm:overflow-hidden mb-3">
+    {#each post.attributes.comments.data as comment}
+      <li
+        class="relative bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
+      >
+        {#if comment.edit}
+          <CommentForm
+            type="update"
+            bind:comment
+            bind:errors
+            bind:success
+            on:saved={() => (comment.edit = !comment.edit)}
+            on:cancel={() => (comment.edit = !comment.edit)}
+          />
+        {:else}
+          <CommentCard bind:comment />
+        {/if}
+      </li>
+    {/each}
+  </ul>
+  {#if post.attributes.comments.data.length >= 5 && $page.query.get('comments') !== 'true'}
     <div>
-      commented by
-      <a href="/users/{comment.attributes.user.slug}">
-        {comment.attributes.user.displayName}
-      </a>
+      <!-- TODO: once backend API has pagination, then use that with on:click|preventDefault -->
+      <a href="{$page.path}?comments=true" class="hover:underline"> View More </a>
     </div>
-    <div>
-      {comment.attributes.updatedAt}
-    </div>
-  {/each}
+  {/if}
 </div>

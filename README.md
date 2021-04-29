@@ -4,6 +4,22 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 20 -
+
+```
+new file:   .prettierrc
+modified:   README.md
+new file:   src/lib/app/comments/CommentCard.svelte
+new file:   src/lib/app/comments/CommentForm.svelte
+new file:   src/lib/app/posts/PostCard.svelte
+new file:   src/lib/app/posts/PostForm.svelte
+modified:   src/lib/shared/helpers.js
+modified:   src/routes/index.svelte
+modified:   src/routes/posts/[slug].svelte
+modified:   src/routes/users/sign-in.svelte
+modified:   src/routes/users/sign-up.svelte
+```
+
 ## EPISODE 19 - Post Slug and Display Comments
 
 ```

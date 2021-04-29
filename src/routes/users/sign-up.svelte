@@ -72,7 +72,7 @@
 </script>
 
 <svelte:head>
-  <title>ProgrammingTIL Svelte and Sapper</title>
+  <title>ProgrammingTIL Svelte and SvelteKit</title>
 </svelte:head>
 
 <div class="flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8">
