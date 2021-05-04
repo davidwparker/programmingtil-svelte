@@ -25,6 +25,7 @@ export const user = createWritableStore('user', {});
 
 // JWT-related
 export const aud = writable('UNKNOWN');
+export const jwt = writable('UNKNOWN');
 export const browser = writable('UNKNOWN');
 export const ip = writable('UNKNOWN');
 export const os = writable('UNKNOWN');

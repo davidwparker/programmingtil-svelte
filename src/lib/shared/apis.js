@@ -10,6 +10,10 @@ async function send({ method, path, data, session, base }) {
   const opts = { method, headers: {} };
 
   if (data) {
+    if (data.creds) {
+      opts.credentials = "include";
+      delete data.creds;
+    }
     if (!data.type) {
       opts.headers["Content-Type"] = "application/json";
       opts.body = JSON.stringify(data);

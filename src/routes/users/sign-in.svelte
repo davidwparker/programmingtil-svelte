@@ -1,4 +1,6 @@
 <script context="module">
+  export const prerender = true;
+
   // NOTES:
   // First attempt required an empty {} return otherwise this:
   // Docs:
@@ -26,22 +28,23 @@
 <script>
   import { onMount } from 'svelte';
   import { dev } from '$app/env';
-  import { goto } from "$app/navigation";
-  import { page, session } from "$app/stores";
-  import * as api from "$lib/shared/apis.js";
-  import { aud, browser, ip, os, user } from "$lib/shared/stores.js";
-  import SubmitButton from "$lib/components/buttons/Submit.svelte";
-  import { UiLockSolid } from "$lib/components/icons";
+  import { goto } from '$app/navigation';
+  import { page, session } from '$app/stores';
+  import * as api from '$lib/shared/apis.js';
+  import { aud, browser, ip, os, user } from '$lib/shared/stores.js';
+  import SubmitButton from '$lib/components/buttons/Submit.svelte';
+  import { UiLockSolid } from '$lib/components/icons';
 
-  let confirmed = false, message = "";
+  let confirmed = false,
+    message = '';
   let login, password;
   let submitting,
     success,
     errors = [];
 
   if (dev) {
-    login = "test@test.com";
-    password = "testtest";
+    login = 'test@test.com';
+    password = 'testtest';
   }
 
   async function checkConfirmation() {
@@ -52,12 +55,12 @@
       message = json;
 
       if (confirmed) {
-        success = "Your email address has been confirmed!";
+        success = 'Your email address has been confirmed!';
       } else {
-        if (message !== "" && message.email && message.email.length >= 0) {
+        if (message !== '' && message.email && message.email.length >= 0) {
           errors = [`Email ${message.email[0]}`];
         } else {
-          errors = ["Token is invalid."];
+          errors = ['Token is invalid.'];
         }
       }
     }
@@ -77,17 +80,17 @@
       // Ignore if this service fails
     }
     const { response, json } = await api.post(
-      $session.API_ENDPOINT,
-      "users/sign_in",
+      $session.BASE_ENDPOINT,
+      'users/sign_in',
       { user: { login, password }, browser: $browser, ip: $ip, os: $os },
       { aud: $aud }
     );
     if (response.status === 200) {
-      success = "Signed in!";
+      success = 'Signed in!';
       login = undefined;
       password = undefined;
       user.set(json);
-      goto('/')
+      goto('/');
     } else if (response.status === 401) {
       success = undefined;
       if (json.error) {
@@ -96,9 +99,7 @@
         errors = [...errors, "You can't do that, Dave."];
       }
     } else if (response.status === 500) {
-      errors = [
-        "Oops, something went wrong! How embarrassing, try again soon.",
-      ];
+      errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
     }
     submitting = false;
   }
@@ -119,6 +120,7 @@
 
 <div class="flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8">
   <form
+    action="/users/sign_in"
     class="max-w-md w-full"
     method="POST"
     on:submit|preventDefault={handleSubmit}

@@ -1,8 +1,8 @@
 <script context="module">
-  import * as api from '$lib/shared/apis';
+  import * as api from '$lib/shared/apis.js';
 
   export async function load({ session }) {
-    const url = `api/v1/posts`;
+    const url = "api/v1/posts";
     const { response, json } = await api.get(session.API_ENDPOINT, url);
     if (response.status === 200) {
       return {
@@ -18,7 +18,7 @@
 
 <script>
   import { onMount } from 'svelte';
-  import { user } from '$lib/shared/stores';
+  import { user } from '$lib/shared/stores.js';
   import AlertErrors from '$lib/components/alerts/Errors.svelte';
   import AlertSuccess from '$lib/components/alerts/Success.svelte';
   import PostCard from '$lib/app/posts/PostCard.svelte';
@@ -58,7 +58,7 @@
 </svelte:head>
 
 <div class="max-w-sm mx-auto py-6">
-  {#if $user && !loading}
+  <!-- {#if $user.user && !loading} -->
     {#if success || errors.length > 0}
       <div class="mb-3">
         <AlertSuccess {success} />
@@ -75,7 +75,7 @@
         showForm = !showForm;
       }}
     />
-    {#if showForm}
+    <!-- {#if showForm} -->
       <PostForm
         type="new"
         bind:errors
@@ -83,8 +83,8 @@
         on:saved={handleSave}
         on:cancel={() => (showForm = !showForm)}
       />
-    {/if}
-  {/if}
+    <!-- {/if} -->
+  <!-- {/if} -->
   <ul class="divide-y divide-gray-200 shadow sm:rounded-md sm:overflow-hidden">
     {#each posts as post}
       <li

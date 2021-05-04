@@ -86,6 +86,24 @@ export function browserDetector(navigator, window) {
 }
 
 /*
+ * Get a specific cookie by name
+ */
+export function getCookie(name) {
+  return document.cookie.split('; ').find(row => row.startsWith(name));
+}
+
+/*
+ * Get the value of a specific cookie by name
+ */
+export function getCookieValue(name) {
+  let cookiesPresent = getCookie(name);
+  if (cookiesPresent) {
+    return cookiesPresent.split('=')[1];
+  }
+  return false;
+}
+
+/*
  * Given a word and count, pluralize the word.
  * Optionally, include withCount = false to not include the # in the returned string
  */

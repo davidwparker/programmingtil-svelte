@@ -2,8 +2,8 @@
   import { createEventDispatcher } from 'svelte';
   import { slide } from 'svelte/transition';
   import { session } from '$app/stores';
-  import * as api from '$lib/shared/apis';
-  import { aud, user } from '$lib/shared/stores';
+  import * as api from '$lib/shared/apis.js';
+  import { aud } from '$lib/shared/stores.js';
   import SubmitButton from '$lib/components/buttons/Submit.svelte';
 
   export let post = undefined,
@@ -26,7 +26,7 @@
     submitting = true;
     errors = [];
     let response, json;
-    let sess = { jwt: $user.jwt, aud: $aud };
+    let sess = { aud: $aud };
     let data = {
       post: {
         title,
@@ -35,11 +35,11 @@
       },
     };
     if (type === 'new') {
-      const ret = await api.post($session.API_ENDPOINT, `api/v1/posts/`, data, sess);
+      const ret = await api.post($session.BASE_ENDPOINT, `posts`, data, sess);
       response = ret.response;
       json = ret.json;
     } else {
-      const ret = await api.put($session.API_ENDPOINT, `api/v1/posts/${post.id}`, data, sess);
+      const ret = await api.put($session.BASE_ENDPOINT, `posts/${post.id}`, data, sess);
       response = ret.response;
       json = ret.json;
     }
@@ -47,7 +47,7 @@
       title = undefined;
       content = undefined;
       if (post) {
-        post.attributes = json.data.attributes
+        post.attributes = json.data.attributes;
       }
       dispatch('saved', json.data);
       success = json.meta.message;
@@ -61,7 +61,7 @@
 </script>
 
 <form
-  action="#"
+  action="/posts"
   method="POST"
   class="mb-6"
   transition:slide

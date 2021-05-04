@@ -4,7 +4,38 @@
 npm run dev -- --port 5000
 ```
 
-## EPISODE 20 -
+## EPISODE 21 - implementing useContext and cookies with our JWTs and AUDs
+
+```
+README.md
+package-lock.json
+package.json
+src/ambient.d.ts
+src/global.d.ts
+src/hooks/index.js
+src/lib/app/comments/CommentForm.svelte
+src/lib/app/posts/PostCard.svelte
+src/lib/app/posts/PostForm.svelte
+src/lib/components/buttons/Submit.svelte
+src/lib/components/layouts/ProtectedLayout.svelte
+src/lib/components/navbar/Nav.svelte
+src/lib/shared/apis.js
+src/lib/shared/helpers.js
+src/lib/shared/stores.js
+src/routes/$layout.svelte
+src/routes/index.svelte
+src/routes/posts/[slug].svelte
+src/routes/posts/index.js
+src/routes/users/[slug].svelte
+src/routes/users/settings.svelte
+src/routes/users/sign-in.svelte
+src/routes/users/sign-up.svelte
+src/routes/users/sign_in.js
+src/routes/users/sign_out.js
+src/service-worker.js
+```
+
+## EPISODE 20 - refactors and creating comments
 
 ```
 new file:   .prettierrc

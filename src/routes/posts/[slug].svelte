@@ -1,5 +1,5 @@
 <script context="module">
-  import * as api from '$lib/shared/apis';
+  import * as api from '$lib/shared/apis.js';
 
   export async function load({ page, session }) {
     const all = page.query.get('comments') === 'true';

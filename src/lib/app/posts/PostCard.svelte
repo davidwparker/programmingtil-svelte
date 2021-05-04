@@ -3,9 +3,9 @@
   import snarkdown from 'snarkdown';
   import { createEventDispatcher } from 'svelte';
   import { session } from '$app/stores';
-  import * as api from '$lib/shared/apis';
-  import { pluralize } from '$lib/shared/helpers';
-  import { aud, user } from '$lib/shared/stores';
+  import * as api from '$lib/shared/apis.js';
+  import { pluralize } from '$lib/shared/helpers.js';
+  import { aud, jwt, user } from '$lib/shared/stores.js';
 
   export let post, errors = [], success = '';
 
@@ -13,11 +13,12 @@
 
   async function handleDestroy(post) {
     errors = [];
+    console.log($aud, $jwt)
     const { response, json } = await api.del(
       $session.API_ENDPOINT,
       `api/v1/posts/${post.id}`,
       {},
-      { jwt: $user.jwt, aud: $aud }
+      { jwt: $jwt, aud: $aud }
     );
     if (response.status === 200) {
       dispatch('destroy', post);
