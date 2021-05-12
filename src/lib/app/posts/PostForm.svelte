@@ -7,10 +7,11 @@
   import SubmitButton from '$lib/components/buttons/Submit.svelte';
 
   export let post = undefined,
+    shadow = false,
     type,
     errors,
-    shadow = false,
     success;
+  let action = post ? `/posts/${post.id}` : '/posts';
   let submitting = false;
   let published_at;
   let title, content;
@@ -26,24 +27,19 @@
   async function handleSubmit() {
     submitting = true;
     errors = [];
-    let response, json;
+    let ret;
     let sess = { aud: $aud };
     let data = {
-      post: {
-        title,
-        content,
-        published_at,
-      },
+      title,
+      content,
+      published_at,
     };
     if (type === 'new') {
-      const ret = await api.post($session.BASE_ENDPOINT, `posts`, data, sess);
-      response = ret.response;
-      json = ret.json;
+      ret = await api.post($session.BASE_ENDPOINT, `posts`, data, sess);
     } else {
-      const ret = await api.put($session.BASE_ENDPOINT, `posts/${post.id}`, data, sess);
-      response = ret.response;
-      json = ret.json;
+      ret = await api.post($session.BASE_ENDPOINT, `posts/${post.id}`, data, sess);
     }
+    const { response, json } = ret;
     if (response.status === 200) {
       title = undefined;
       content = undefined;
@@ -61,14 +57,7 @@
   }
 </script>
 
-<form
-  action="/posts"
-  method="POST"
-  class="mb-6"
-  transition:slide
-  on:submit|preventDefault={handleSubmit}
->
-  <!-- These classes only if new -->
+<form {action} method="POST" class="mb-6" transition:slide on:submit|preventDefault={handleSubmit}>
   <div class={shadow ? 'shadow sm:rounded-md sm:overflow-hidden' : ''}>
     <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
       <div class="grid grid-cols-3 gap-6">

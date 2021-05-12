@@ -4,6 +4,21 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 23 - Deletes and Updating comments with SvelteKit Endpoints
+
+```
+modified:   README.md
+modified:   src/lib/app/posts/PostCard.svelte
+modified:   src/lib/app/posts/PostForm.svelte
+modified:   src/lib/components/navbar/Nav.svelte
+modified:   src/lib/shared/apis.js
+modified:   src/routes/index.svelte
+modified:   src/routes/posts/index.js
+modified:   src/routes/users/sign_in.js
+modified:   src/routes/users/sign_out.js
+new file:   src/routes/posts/[id].js
+```
+
 ## EPISODE 22 - Doing more with endpoints and no-JS
 
 ```

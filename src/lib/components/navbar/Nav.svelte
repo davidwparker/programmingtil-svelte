@@ -40,15 +40,15 @@
     <div class="">
       <a href="/" class={klasses}>Home</a>
       <a href="/about" class="{klasses} ml-1">About</a>
-      <!-- TODO: convert to a form for non-JS users -->
       <a href="/users/sign-in/" class="{klasses} {$loggedIn ? 'hidden' : ''} ml-1"> Sign In </a>
-      <a
-        href="/users/sign_out"
-        class="{klasses} {$loggedIn ? '' : 'hidden'} ml-1 "
-        on:click|preventDefault={handleSignOut}
-      >
-        Sign Out
-      </a>
+      <form action="/users/sign_out?_method=delete" method="post" class="inline">
+        <input
+          type="submit"
+          value="Sign Out"
+          class="{klasses} {$loggedIn ? '' : 'hidden'} ml-1 cursor-pointer"
+          on:click|preventDefault={handleSignOut}
+        />
+      </form>
       <a href="/users/settings/" class="{klasses} {$loggedIn ? '' : 'hidden'} ml-1"> Settings </a>
       <a href="/users/sign-up/" class="{klasses} {$loggedIn ? 'hidden' : ''} ml-1"> Register </a>
     </div>

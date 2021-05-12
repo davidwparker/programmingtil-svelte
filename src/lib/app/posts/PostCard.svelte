@@ -5,7 +5,7 @@
   import { session } from '$app/stores';
   import * as api from '$lib/shared/apis.js';
   import { pluralize } from '$lib/shared/helpers.js';
-  import { aud, jwt, user, userId } from '$lib/shared/stores.js';
+  import { aud, userId } from '$lib/shared/stores.js';
 
   export let post,
     errors = [],
@@ -15,18 +15,17 @@
 
   async function handleDestroy(post) {
     errors = [];
-    console.log($aud, $jwt);
     const { response, json } = await api.del(
-      $session.API_ENDPOINT,
-      `api/v1/posts/${post.id}`,
+      $session.BASE_ENDPOINT,
+      `posts/${post.id}`,
       {},
-      { jwt: $jwt, aud: $aud }
+      { aud: $aud }
     );
     if (response.status === 200) {
       dispatch('destroy', post);
       success = json.meta.message;
     } else if (response.status === 401 || response.status === 404 || response.status === 406) {
-      errors = json.meta.message;
+      errors = [json.meta.message];
     } else if (response.status === 500) {
       errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
     }
@@ -40,7 +39,7 @@
         {post.attributes.title}
       </p>
     </a>
-    <p class="text-sm text-gray-500 truncate">
+    <div class="text-sm text-gray-500 truncate">
       <a href="/users/{post.attributes.user.slug}" sveltekit:prefetch>
         Posted by {post.attributes.user.displayName}
       </a>
@@ -51,13 +50,19 @@
           post.edit = !post.edit;
         }}>edit</a
       >
-      <input
-        type="button"
-        class={$userId == post.attributes.user.id ? '' : 'hidden'}
-        value="delete"
-        on:click={handleDestroy(post)}
-      />
-    </p>
+      <form
+        class="{$userId == post.attributes.user.id ? '' : 'hidden'} inline"
+        action="/posts/{post.id}?_method=delete"
+        method="post"
+      >
+        <input
+          type="submit"
+          value="delete"
+          class="cursor-pointer"
+          on:click|preventDefault={handleDestroy(post)}
+        />
+      </form>
+    </div>
   </div>
   <time
     datetime={post.attributes.publishedAt}

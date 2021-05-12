@@ -46,32 +46,23 @@ export const post = async (request) => {
       `userId=${json.user.id};path=/;HttpOnly;Secure;expires=Fri, 31 Dec 9999 23:59:59 GMT`
     );
     delete json.jwt;
-  } else if (response.status === 401) {
-    return {
-      status: 401,
-      body: 'bad',
-    };
-  } else if (response.status === 500) {
-    return {
-      status: 500,
-      body: 'bad',
-    };
   }
 
-  if (cookiesArray.length > 0) {
-    headers = {
-      ...response.headers,
-      'set-cookie': cookiesArray,
-    };
-  }
+  headers = {
+    ...response.headers,
+    'set-cookie': cookiesArray,
+  };
 
-  // See SvelteKit Demo App for redirect
-  if (response.status === 200 && request.headers['content-type'] !== 'application/json') {
-    headers.location = '/';
+  if (request.headers['content-type'] !== 'application/json') {
+    if ([200].includes(response.status)) {
+      headers.location = '/?success=t';
+    } else if ([401, 500].includes(response.status)) {
+      headers.location = `/?error=${json.error}`;
+    }
     return {
       status: 303,
-      headers,
       body: '',
+      headers,
     };
   }
 
