@@ -5,7 +5,7 @@
   import { session } from '$app/stores';
   import * as api from '$lib/shared/apis.js';
   import { pluralize } from '$lib/shared/helpers.js';
-  import { aud, jwt, user, userId } from '$lib/shared/stores.js';
+  import { aud, jwt, userId } from '$lib/shared/stores.js';
 
   export let post,
     errors = [],
@@ -46,14 +46,14 @@
       </a>
       <a
         href="/posts/{post.attributes.slug}/edit"
-        class={$userId == post.attributes.user.id ? '' : 'hidden'}
+        class:hidden={$userId != post.attributes.user.id}
         on:click|preventDefault={() => {
           post.edit = !post.edit;
         }}>edit</a
       >
       <input
         type="button"
-        class={$userId == post.attributes.user.id ? '' : 'hidden'}
+        class:hidden={$userId != post.attributes.user.id}
         value="delete"
         on:click={handleDestroy(post)}
       />
@@ -68,9 +68,8 @@
 </div>
 <div class="mt-1">
   <p
-    class="{post.expand
-      ? ''
-      : 'line-clamp-2'} text-sm text-gray-600 overflow-x-hidden cursor-pointer markdown"
+    class="text-sm text-gray-600 overflow-x-hidden cursor-pointer markdown"
+    class:line-clamp-2={!post.expand}
     on:click|preventDefault={() => {
       post.expand = !post.expand;
     }}

@@ -57,7 +57,7 @@ export const get = async (request) => {
   if (response.status === 200) {
     if (cookies.jwt) {
       cookiesArray.push(`jwt=;path=/;HttpOnly;Secure;expires=Thu, 01 Jan 1970 00:00:00 GMT`);
-      cookiesArray.push(`userId=;path=/;HttpOnly;Secure;expires=Fri, 31 Dec 9999 23:59:59 GMT`);
+      cookiesArray.push(`userId=;path=/;HttpOnly;Secure;expires=Thu, 01 Jan 1970 00:00:00 GMT`);
     }
   } else if (response.status === 401) {
     return {

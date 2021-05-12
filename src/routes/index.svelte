@@ -17,8 +17,7 @@
 </script>
 
 <script>
-  import { onMount } from 'svelte';
-  import { loggedIn, user } from '$lib/shared/stores.js';
+  import { loggedIn } from '$lib/shared/stores.js';
   import AlertErrors from '$lib/components/alerts/Errors.svelte';
   import AlertSuccess from '$lib/components/alerts/Success.svelte';
   import PostCard from '$lib/app/posts/PostCard.svelte';
@@ -26,15 +25,8 @@
 
   export let posts;
   let showForm = false;
-  let loading = true;
   let errors = [],
     success;
-
-  onMount(() => {
-    if ($user.user) {
-      loading = false;
-    }
-  });
 
   function handleDestroy(event) {
     const post = event.detail;
@@ -67,8 +59,8 @@
   <a
     href="/posts/new"
     type="button"
-    class="{$loggedIn ? '' : 'hidden'}
-      px-3 py-2 rounded-md leading-5 font-medium mb-6 cursor-pointer
+    class:hidden={!$loggedIn}
+    class="px-3 py-2 rounded-md leading-5 font-medium mb-6 cursor-pointer
       focus:outline-none focus:text-white focus:bg-primary-300
     text-neutral-800 hover:text-white hover:bg-primary-300"
     on:click|preventDefault={() => {

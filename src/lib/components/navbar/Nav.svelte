@@ -41,16 +41,17 @@
       <a href="/" class={klasses}>Home</a>
       <a href="/about" class="{klasses} ml-1">About</a>
       <!-- TODO: convert to a form for non-JS users -->
-      <a href="/users/sign-in/" class="{klasses} {$loggedIn ? 'hidden' : ''} ml-1"> Sign In </a>
+      <a href="/users/sign-in/" class="{klasses} ml-1" class:hidden={$loggedIn}> Sign In </a>
       <a
         href="/users/sign_out"
-        class="{klasses} {$loggedIn ? '' : 'hidden'} ml-1 "
+        class="{klasses} ml-1"
+        class:hidden={!$loggedIn}
         on:click|preventDefault={handleSignOut}
       >
         Sign Out
       </a>
-      <a href="/users/settings/" class="{klasses} {$loggedIn ? '' : 'hidden'} ml-1"> Settings </a>
-      <a href="/users/sign-up/" class="{klasses} {$loggedIn ? 'hidden' : ''} ml-1"> Register </a>
+      <a href="/users/settings/" class="{klasses} ml-1" class:hidden={!$loggedIn}> Settings </a>
+      <a href="/users/sign-up/" class="{klasses} ml-1" class:hidden={$loggedIn}> Register </a>
     </div>
   </div>
 </nav>
