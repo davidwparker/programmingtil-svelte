@@ -65,10 +65,8 @@
   <a
     href="/posts/new"
     type="button"
-    class="{$loggedIn
-      ? ''
-      : 'hidden'}
-      px-3 py-2 rounded-md leading-5 font-medium mb-6 cursor-pointer
+    class:hidden={!$loggedIn}
+    class="px-3 py-2 rounded-md leading-5 font-medium mb-6 cursor-pointer
       focus:outline-none focus:text-white focus:bg-primary-300
     text-neutral-800 hover:text-white hover:bg-primary-300"
     on:click|preventDefault={() => {

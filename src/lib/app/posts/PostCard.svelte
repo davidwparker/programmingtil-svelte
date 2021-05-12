@@ -45,13 +45,14 @@
       </a>
       <a
         href="/posts/{post.attributes.slug}/edit"
-        class={$userId == post.attributes.user.id ? '' : 'hidden'}
+        class:hidden={$userId != post.attributes.user.id}
         on:click|preventDefault={() => {
           post.edit = !post.edit;
         }}>edit</a
       >
       <form
-        class="{$userId == post.attributes.user.id ? '' : 'hidden'} inline"
+        class:hidden={$userId != post.attributes.user.id}
+        class="inline"
         action="/posts/{post.id}?_method=delete"
         method="post"
       >
@@ -73,9 +74,8 @@
 </div>
 <div class="mt-1">
   <p
-    class="{post.expand
-      ? ''
-      : 'line-clamp-2'} text-sm text-gray-600 overflow-x-hidden cursor-pointer markdown"
+    class="text-sm text-gray-600 overflow-x-hidden cursor-pointer markdown"
+    class:line-clamp-2={!post.expand}
     on:click|preventDefault={() => {
       post.expand = !post.expand;
     }}
