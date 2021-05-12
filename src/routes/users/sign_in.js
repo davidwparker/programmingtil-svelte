@@ -24,15 +24,13 @@ export const post = async (request) => {
   if (body.entries instanceof Function) {
     body = getFormBody(request.body);
   }
-  let login = body?.user?.login || body['user[login]'];
-  let password = body?.user?.password || body['user[password]'];
   const cookies = cookie.parse(request.headers.cookie || '');
   const cookiesArray = [];
   const { response, json } = await api.post(
     request.context.API_ENDPOINT,
     'users/sign_in',
     {
-      user: { login, password },
+      user: { login: body['login'], password: body['password'] },
       browser: request.body?.browser,
       ip: request.body?.ip,
       os: request.body?.os,
@@ -41,12 +39,12 @@ export const post = async (request) => {
   );
   let headers = response.headers;
   if (response.status === 200) {
-    if (!cookies.jwt) {
-      cookiesArray.push(
-        `jwt=${json.jwt};path=/;HttpOnly;Secure;expires=Fri, 31 Dec 9999 23:59:59 GMT`
-      );
-      // `jwt=${json.jwt};path=/;Secure;expires=Fri, 31 Dec 9999 23:59:59 GMT`
-    }
+    cookiesArray.push(
+      `jwt=${json.jwt};path=/;HttpOnly;Secure;expires=Fri, 31 Dec 9999 23:59:59 GMT`
+    );
+    cookiesArray.push(
+      `userId=${json.user.id};path=/;HttpOnly;Secure;expires=Fri, 31 Dec 9999 23:59:59 GMT`
+    );
     delete json.jwt;
   } else if (response.status === 401) {
     return {
@@ -70,7 +68,6 @@ export const post = async (request) => {
   // See SvelteKit Demo App for redirect
   if (response.status === 200 && request.headers['content-type'] !== 'application/json') {
     headers.location = '/';
-    console.log(headers)
     return {
       status: 303,
       headers,

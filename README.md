@@ -4,6 +4,25 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 22 - Doing more with endpoints and no-JS
+
+```
+modified:   README.md
+modified:   src/hooks/index.js
+modified:   src/lib/app/posts/PostCard.svelte
+modified:   src/lib/app/posts/PostForm.svelte
+modified:   src/lib/components/navbar/Nav.svelte
+modified:   src/lib/shared/stores.js
+modified:   src/routes/$layout.svelte
+modified:   src/routes/index.svelte
+modified:   src/routes/posts/index.js
+modified:   src/routes/users/sign-in.svelte
+modified:   src/routes/users/sign_in.js
+modified:   src/routes/users/sign_out.js
+new file:   src/routes/posts/[slug]/
+new file:   src/routes/posts/new.svelte
+```
+
 ## EPISODE 21 - implementing useContext and cookies with our JWTs and AUDs
 
 ```

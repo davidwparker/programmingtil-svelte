@@ -30,3 +30,7 @@ export const browser = writable('UNKNOWN');
 export const ip = writable('UNKNOWN');
 export const os = writable('UNKNOWN');
 
+// JS on/off-related
+export const js = writable(false);
+export const loggedIn = writable(false);
+export const userId = writable(0);

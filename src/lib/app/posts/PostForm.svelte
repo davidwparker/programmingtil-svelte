@@ -9,6 +9,7 @@
   export let post = undefined,
     type,
     errors,
+    shadow = false,
     success;
   let submitting = false;
   let published_at;
@@ -68,7 +69,7 @@
   on:submit|preventDefault={handleSubmit}
 >
   <!-- These classes only if new -->
-  <div class={type === 'new' ? 'shadow sm:rounded-md sm:overflow-hidden' : ''}>
+  <div class={shadow ? 'shadow sm:rounded-md sm:overflow-hidden' : ''}>
     <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
       <div class="grid grid-cols-3 gap-6">
         <div class="col-span-3 sm:col-span-2">

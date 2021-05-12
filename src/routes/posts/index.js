@@ -41,11 +41,7 @@ export const post = async (request) => {
     }
   );
   if (response.status === 200) {
-    // if (!cookies.jwt) {
-      cookiesArray.push(
-        `jwt=${cookies.jwt};path=/;HttpOnly;Secure;expires=Fri, 31 Dec 9999 23:59:59 GMT`
-      );
-    // }
+    // Nada
   } else if (response.status === 401 || response.status === 404 || response.status === 406) {
     return {
       status: 401,
@@ -58,19 +54,14 @@ export const post = async (request) => {
     };
   }
   // TODO: check for bad JWT/delete.
-  let headers = response.headers;
-  if (cookiesArray.length > 0) {
-    headers = {
-      ...response.headers,
-      'set-cookie': cookiesArray,
-    };
-  }
-
+  let headers = {
+    ...response.headers,
+    'set-cookie': cookiesArray,
+  };
 
   // See SvelteKit Demo App for redirect
   if (response.status === 200 && request.headers['content-type'] !== 'application/json') {
     headers.location = '/';
-    console.log(headers);
     return {
       status: 303,
       headers,

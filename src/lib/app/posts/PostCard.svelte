@@ -5,15 +5,17 @@
   import { session } from '$app/stores';
   import * as api from '$lib/shared/apis.js';
   import { pluralize } from '$lib/shared/helpers.js';
-  import { aud, jwt, user } from '$lib/shared/stores.js';
+  import { aud, jwt, user, userId } from '$lib/shared/stores.js';
 
-  export let post, errors = [], success = '';
+  export let post,
+    errors = [],
+    success = '';
 
   const dispatch = createEventDispatcher();
 
   async function handleDestroy(post) {
     errors = [];
-    console.log($aud, $jwt)
+    console.log($aud, $jwt);
     const { response, json } = await api.del(
       $session.API_ENDPOINT,
       `api/v1/posts/${post.id}`,
@@ -42,16 +44,19 @@
       <a href="/users/{post.attributes.user.slug}" sveltekit:prefetch>
         Posted by {post.attributes.user.displayName}
       </a>
-      {#if $user?.user?.id === post.attributes.user.id}
-        <input
-          type="button"
-          value="edit"
-          on:click={() => {
-            post.edit = !post.edit;
-          }}
-        />
-        <input type="button" value="delete" on:click={handleDestroy(post)} />
-      {/if}
+      <a
+        href="/posts/{post.attributes.slug}/edit"
+        class={$userId == post.attributes.user.id ? '' : 'hidden'}
+        on:click|preventDefault={() => {
+          post.edit = !post.edit;
+        }}>edit</a
+      >
+      <input
+        type="button"
+        class={$userId == post.attributes.user.id ? '' : 'hidden'}
+        value="delete"
+        on:click={handleDestroy(post)}
+      />
     </p>
   </div>
   <time

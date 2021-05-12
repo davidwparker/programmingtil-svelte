@@ -18,7 +18,7 @@
 
 <script>
   import { onMount } from 'svelte';
-  import { user } from '$lib/shared/stores.js';
+  import { loggedIn, user } from '$lib/shared/stores.js';
   import AlertErrors from '$lib/components/alerts/Errors.svelte';
   import AlertSuccess from '$lib/components/alerts/Success.svelte';
   import PostCard from '$lib/app/posts/PostCard.svelte';
@@ -58,33 +58,33 @@
 </svelte:head>
 
 <div class="max-w-sm mx-auto py-6">
-  <!-- {#if $user.user && !loading} -->
-    {#if success || errors.length > 0}
-      <div class="mb-3">
-        <AlertSuccess {success} />
-        <AlertErrors {errors} />
-      </div>
-    {/if}
-    <input
-      type="button"
-      class="px-3 py-2 rounded-md leading-5 font-medium mb-6 cursor-pointer
-        focus:outline-none focus:text-white focus:bg-primary-300
-      text-neutral-800 hover:text-white hover:bg-primary-300"
-      value="New Post"
-      on:click={() => {
-        showForm = !showForm;
-      }}
+  {#if success || errors.length > 0}
+    <div class="mb-3">
+      <AlertSuccess {success} />
+      <AlertErrors {errors} />
+    </div>
+  {/if}
+  <a
+    href="/posts/new"
+    type="button"
+    class="{$loggedIn ? '' : 'hidden'}
+      px-3 py-2 rounded-md leading-5 font-medium mb-6 cursor-pointer
+      focus:outline-none focus:text-white focus:bg-primary-300
+    text-neutral-800 hover:text-white hover:bg-primary-300"
+    on:click|preventDefault={() => {
+      showForm = !showForm;
+    }}
+  >New Post</a>
+  {#if showForm}
+    <PostForm
+      shadow={true}
+      type="new"
+      bind:errors
+      bind:success
+      on:saved={handleSave}
+      on:cancel={() => (showForm = !showForm)}
     />
-    <!-- {#if showForm} -->
-      <PostForm
-        type="new"
-        bind:errors
-        bind:success
-        on:saved={handleSave}
-        on:cancel={() => (showForm = !showForm)}
-      />
-    <!-- {/if} -->
-  <!-- {/if} -->
+  {/if}
   <ul class="divide-y divide-gray-200 shadow sm:rounded-md sm:overflow-hidden">
     {#each posts as post}
       <li

@@ -31,7 +31,7 @@
   import { goto } from '$app/navigation';
   import { page, session } from '$app/stores';
   import * as api from '$lib/shared/apis.js';
-  import { aud, browser, ip, os, user } from '$lib/shared/stores.js';
+  import { aud, browser, ip, loggedIn, os, user, userId } from '$lib/shared/stores.js';
   import SubmitButton from '$lib/components/buttons/Submit.svelte';
   import { UiLockSolid } from '$lib/components/icons';
 
@@ -82,14 +82,16 @@
     const { response, json } = await api.post(
       $session.BASE_ENDPOINT,
       'users/sign_in',
-      { user: { login, password }, browser: $browser, ip: $ip, os: $os },
+      { login, password, browser: $browser, ip: $ip, os: $os },
       { aud: $aud }
     );
     if (response.status === 200) {
       success = 'Signed in!';
       login = undefined;
       password = undefined;
+      loggedIn.set(true);
       user.set(json);
+      userId.set(json.user.id);
       goto('/');
     } else if (response.status === 401) {
       success = undefined;
@@ -129,7 +131,7 @@
       <div class="-mt-px">
         <input
           aria-label="Username or Email address"
-          name="user[login]"
+          name="login"
           type="text"
           class="block w-full rounded-t-md
             focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10
@@ -142,7 +144,7 @@
       <div class="-mt-px">
         <input
           aria-label="Password"
-          name="user[password]"
+          name="password"
           type="password"
           class="block w-full rounded-b-md
             focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10"

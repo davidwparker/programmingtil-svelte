@@ -1,7 +1,17 @@
+<script context="module">
+  import { loggedIn, userId } from '$lib/shared/stores.js';
+
+  export async function load({ session }) {
+    loggedIn.set(session.loggedIn || false);
+    userId.set(session.userId || 0);
+    return {};
+  }
+</script>
+
 <script>
   import { onMount } from 'svelte';
-  import { audBuilder, browserDetector, getCookieValue } from '$lib/shared/helpers.js';
-  import { aud, browser, jwt, os } from '$lib/shared/stores.js';
+  import { audBuilder, browserDetector } from '$lib/shared/helpers.js';
+  import { aud, browser, js, os } from '$lib/shared/stores.js';
   import Nav from '$lib/components/navbar/Nav.svelte';
   import '../tailwind.css';
 
@@ -11,12 +21,12 @@
       aud.set(audBuilder(bd));
       browser.set(`${bd.browser.name}||${bd.browser.version}`);
       os.set(`${bd.os.name}||${bd.os.version}`);
-      jwt.set(getCookieValue('jwt')); // Doesn't do anything...
     }
+    js.set(true);
   });
 </script>
 
-<main class="bg-primary-100 min-h-screen">
+<main class="bg-primary-100 min-h-screen {$js ? 'js' : 'no-js'}" class:logged-in={$loggedIn}>
   <Nav />
   <slot />
 </main>
