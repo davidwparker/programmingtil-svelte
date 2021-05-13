@@ -4,6 +4,12 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 24 - Two ways to create a Sitemap
+
+```
+new file:   src/routes/sitemap.xml.js
+```
+
 ## EPISODE 23 - Deletes and Updating comments with SvelteKit Endpoints
 
 ```

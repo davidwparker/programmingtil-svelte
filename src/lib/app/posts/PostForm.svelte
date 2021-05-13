@@ -27,7 +27,7 @@
   async function handleSubmit() {
     submitting = true;
     errors = [];
-    let ret;
+    let url;
     let sess = { aud: $aud };
     let data = {
       title,
@@ -35,11 +35,11 @@
       published_at,
     };
     if (type === 'new') {
-      ret = await api.post($session.BASE_ENDPOINT, `posts`, data, sess);
+      url = `posts`;
     } else {
-      ret = await api.post($session.BASE_ENDPOINT, `posts/${post.id}`, data, sess);
+      url = `posts/${post.id}`;
     }
-    const { response, json } = ret;
+    const { response, json } = await api.post($session.BASE_ENDPOINT, url, data, sess);
     if (response.status === 200) {
       title = undefined;
       content = undefined;
