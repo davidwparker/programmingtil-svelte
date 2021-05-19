@@ -4,12 +4,19 @@ export const getSession = (request) => {
   const cookies = cookie.parse(request.headers.cookie || '');
   const loggedIn = cookies.jwt !== undefined || false;
   const userId = cookies.userId || 0;
+  const username = cookies.username || '';
+  const displayName = cookies.displayName || '';
   return {
     API_ENDPOINT: import.meta.env.VITE_API_ENDPOINT,
     BASE_ENDPOINT: import.meta.env.VITE_BASE_ENDPOINT,
     DEBUG_MODE: import.meta.env.VITE_DEBUG_MODE,
     loggedIn,
     userId,
+    user: {
+      id: userId,
+      displayName,
+      username,
+    },
   };
 };
 

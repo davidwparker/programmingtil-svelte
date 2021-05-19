@@ -25,6 +25,12 @@ export const post = async (request) => {
     cookiesArray.push(
       `userId=${json.user.id};path=/;HttpOnly;Secure;expires=Fri, 31 Dec 9999 23:59:59 GMT`
     );
+    cookiesArray.push(
+      `displayName=${json.user.displayName};path=/;HttpOnly;Secure;expires=Fri, 31 Dec 9999 23:59:59 GMT`
+    );
+    cookiesArray.push(
+      `username=${json.user.username};path=/;HttpOnly;Secure;expires=Fri, 31 Dec 9999 23:59:59 GMT`
+    );
     delete json.jwt;
   }
 

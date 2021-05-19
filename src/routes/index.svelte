@@ -21,7 +21,7 @@
 </script>
 
 <script>
-  import { loggedIn } from '$lib/shared/stores.js';
+  import { session } from '$app/stores';
   import AlertErrors from '$lib/components/alerts/Errors.svelte';
   import AlertSuccess from '$lib/components/alerts/Success.svelte';
   import PostCard from '$lib/app/posts/PostCard.svelte';
@@ -65,7 +65,7 @@
   <a
     href="/posts/new"
     type="button"
-    class:hidden={!$loggedIn}
+    class:hidden={!$session.loggedIn}
     class="px-3 py-2 rounded-md leading-5 font-medium mb-6 cursor-pointer
       focus:outline-none focus:text-white focus:bg-primary-300
     text-neutral-800 hover:text-white hover:bg-primary-300"

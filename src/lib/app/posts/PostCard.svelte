@@ -5,7 +5,7 @@
   import { session } from '$app/stores';
   import * as api from '$lib/shared/apis.js';
   import { pluralize } from '$lib/shared/helpers.js';
-  import { aud, userId } from '$lib/shared/stores.js';
+  import { aud } from '$lib/shared/stores.js';
 
   export let post,
     errors = [],
@@ -45,13 +45,13 @@
       </a>
       <a
         href="/posts/{post.attributes.slug}/edit"
-        class:hidden={$userId != post.attributes.user.id}
+        class:hidden={$session.userId != post.attributes.user.id}
         on:click|preventDefault={() => {
           post.edit = !post.edit;
         }}>edit</a
       >
       <form
-        class:hidden={$userId != post.attributes.user.id}
+        class:hidden={$session.userId != post.attributes.user.id}
         class="inline"
         action="/posts/{post.id}?_method=delete"
         method="post"

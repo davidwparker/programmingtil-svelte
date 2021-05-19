@@ -31,7 +31,7 @@
   import { goto } from '$app/navigation';
   import { page, session } from '$app/stores';
   import * as api from '$lib/shared/apis.js';
-  import { aud, browser, ip, loggedIn, os, user, userId } from '$lib/shared/stores.js';
+  import { aud, browser, ip, os, user } from '$lib/shared/stores.js';
   import SubmitButton from '$lib/components/buttons/Submit.svelte';
   import { UiLockSolid } from '$lib/components/icons';
 
@@ -89,9 +89,8 @@
       success = 'Signed in!';
       login = undefined;
       password = undefined;
-      loggedIn.set(true);
       user.set(json);
-      userId.set(json.user.id);
+      session.set({ ...$session, userId: json.user.id, loggedIn: true });
       goto('/');
     } else if (response.status === 401) {
       success = undefined;

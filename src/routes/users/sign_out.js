@@ -16,6 +16,8 @@ export const del = async (request) => {
     if (cookies.jwt) {
       cookiesArray.push(`jwt=;path=/;HttpOnly;Secure;expires=Thu, 01 Jan 1970 00:00:00 GMT`);
       cookiesArray.push(`userId=;path=/;HttpOnly;Secure;expires=Thu, 01 Jan 1970 00:00:00 GMT`);
+      cookiesArray.push(`username=;path=/;HttpOnly;Secure;expires=Thu, 01 Jan 1970 00:00:00 GMT`);
+      cookiesArray.push(`displayName=;path=/;HttpOnly;Secure;expires=Thu, 01 Jan 1970 00:00:00 GMT`);
     }
   }
 

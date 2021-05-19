@@ -111,3 +111,18 @@ export function pluralize(word, count, withCount = true) {
   const out = (count > 1 || count === 0) ? `${word}s` : word;
   return withCount ? `${count} ${out}` : out;
 }
+
+
+/*
+ * Returns a redirect if needed
+ */
+export function protectedRedirect(session, base) {
+  if (!session.loggedIn) {
+    return {
+      redirect: '/users/sign-in',
+      status: 303,
+    };
+  }
+  return base;
+}
+
