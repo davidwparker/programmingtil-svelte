@@ -1,8 +1,5 @@
 .DS_Store
 /node_modules/
-/src/node_modules/@sapper/
-/.sapper/
-/__sapper__/
 yarn.lock
 yarn-error.log
 /cypress/screenshots/
@@ -13,3 +10,4 @@ yarn-error.log
 .svelte
 .vercel_build_output
 /tmp/
+/.svelte-kit

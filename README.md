@@ -4,6 +4,33 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 25 - upgrading between sveltekit versions
+
+```
+npm update
+```
+
+```
+modified:   .gitignore
+new file:   .prettierignore
+modified:   README.md
+modified:   package-lock.json
+modified:   package.json
+modified:   src/global.d.ts
+modified:   src/hooks/index.js
+renamed:    src/hooks/index.js -> src/hooks.js
+modified:   src/lib/shared/apis.js
+renamed:    src/routes/$error.svelte -> src/routes/__error.svelte
+renamed:    src/routes/$layout.svelte -> src/routes/__layout.svelte
+modified:   src/routes/posts/[id].js
+modified:   src/routes/posts/index.js
+modified:   src/routes/users/sign_in.js
+modified:   src/routes/users/sign_out.js
+deleted:    svelte.config.cjs
+new file:   svelte.config.js
+modified:   tailwind.config.cjs
+```
+
 ## EPISODE 24 - Two ways to create a Sitemap
 
 ```

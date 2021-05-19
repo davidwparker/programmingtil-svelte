@@ -7,7 +7,7 @@ export const del = async (request) => {
   const cookiesArray = [];
 
   const { response, json } = await api.del(
-    request.context.API_ENDPOINT,
+    request.locals.API_ENDPOINT,
     'users/sign_out',
     {},
     { jwt: cookies.jwt }

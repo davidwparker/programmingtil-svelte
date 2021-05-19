@@ -1,33 +1,13 @@
-import cookie from 'cookie';
 import * as api from '$lib/shared/apis.js';
-
-//
-// Via Dana Woodman
-// https://dev.to/danawoodman/getting-form-body-data-in-your-sveltekit-endpoints-4a85
-//
-function getFormBody(body) {
-  return [...body.entries()].reduce((data, [k, v]) => {
-    let value = v;
-    if (value === 'true') value = true;
-    if (value === 'false') value = false;
-    if (k in data) data[k] = Array.isArray(data[k]) ? [...data[k], value] : [data[k], value];
-    else data[k] = value;
-    return data;
-  }, {});
-}
 
 //
 // POST /users/sign_in
 //
 export const post = async (request) => {
-  let body = request.body;
-  if (body.entries instanceof Function) {
-    body = getFormBody(request.body);
-  }
-  const cookies = cookie.parse(request.headers.cookie || '');
+  const body = api.getFormBody(request.body);
   const cookiesArray = [];
   const { response, json } = await api.post(
-    request.context.API_ENDPOINT,
+    request.locals.API_ENDPOINT,
     'users/sign_in',
     {
       user: { login: body['login'], password: body['password'] },
