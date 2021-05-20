@@ -1,5 +1,5 @@
 <script context="module">
-  import { user } from '$lib/shared/stores.js';
+  import { user } from '$lib/shared/stores';
 
   export async function load({ session }) {
     user.set({ user: session.user });
@@ -10,8 +10,8 @@
 <script>
   import { session } from '$app/stores';
   import { onMount } from 'svelte';
-  import { audBuilder, browserDetector } from '$lib/shared/helpers.js';
-  import { aud, browser, js, os } from '$lib/shared/stores.js';
+  import { audBuilder, browserDetector } from '$lib/shared/helpers';
+  import { aud, browser, js, os } from '$lib/shared/stores';
   import Nav from '$lib/components/navbar/Nav.svelte';
   import '../tailwind.css';
 

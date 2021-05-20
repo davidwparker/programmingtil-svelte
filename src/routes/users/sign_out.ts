@@ -1,8 +1,9 @@
+import type { Response, Request } from '@sveltejs/kit';
 import cookie from 'cookie';
-import * as api from '$lib/shared/apis.js';
+import * as api from '$lib/shared/apis';
 
 // DELETE /users/sign_out
-export const del = async (request) => {
+export const del = async (request: Request): Promise<Response> => {
   const cookies = cookie.parse(request.headers.cookie || '');
   const cookiesArray = [];
 
@@ -21,7 +22,7 @@ export const del = async (request) => {
     }
   }
 
-  headers = {
+  const headers = {
     ...response.headers,
     'set-cookie': cookiesArray,
   };

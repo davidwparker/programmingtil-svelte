@@ -1,6 +1,7 @@
+import type { Handle, GetSession } from '@sveltejs/kit';
 import cookie from 'cookie';
 
-export const getSession = (request) => {
+export const getSession: GetSession = (request) => {
   const cookies = cookie.parse(request.headers.cookie || '');
   const loggedIn = cookies.jwt !== undefined || false;
   const userId = cookies.userId || 0;
@@ -20,7 +21,7 @@ export const getSession = (request) => {
   };
 };
 
-export const handle = async ({ request, render }) => {
+export const handle: Handle = async ({ request, render }) => {
   request.locals.API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
   request.locals.BASE_ENDPOINT = import.meta.env.VITE_BASE_ENDPOINT;
   request.locals.DEBUG_MODE = import.meta.env.VITE_DEBUG_MODE;
@@ -30,7 +31,7 @@ export const handle = async ({ request, render }) => {
     ...request,
     method: (request.query.get('_method') || request.method).toUpperCase(),
   });
-  let headers = response.headers;
+  const headers = response.headers;
   return {
     ...response,
     headers,

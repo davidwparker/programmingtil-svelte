@@ -3,9 +3,9 @@
   import snarkdown from 'snarkdown';
   import { createEventDispatcher } from 'svelte';
   import { session } from '$app/stores';
-  import * as api from '$lib/shared/apis.js';
-  import { pluralize } from '$lib/shared/helpers.js';
-  import { aud } from '$lib/shared/stores.js';
+  import * as api from '$lib/shared/apis';
+  import { pluralize } from '$lib/shared/helpers';
+  import { aud } from '$lib/shared/stores';
 
   export let post,
     errors = [],
