@@ -1,50 +1,107 @@
-<script>
-	import successkid from 'images/successkid.jpg';
+<script context="module">
+  import * as api from '$lib/shared/apis.js';
+
+  export async function load({ page, session }) {
+    const url = 'api/v1/posts';
+    const { response, json } = await api.get(session.API_ENDPOINT, url);
+    const success = page.query.get('success') ? 'Success!' : undefined;
+    const error = page.query.get('error') ? 'Error!' : undefined;
+    if (response.status === 200) {
+      return {
+        props: {
+          posts: json.data,
+          success,
+          error,
+        },
+      };
+    } else {
+      return { props: { posts: [], success, error } };
+    }
+  }
 </script>
 
-<style>
-	h1, figure, p {
-		text-align: center;
-		margin: 0 auto;
-	}
+<script>
+  import { loggedIn } from '$lib/shared/stores.js';
+  import AlertErrors from '$lib/components/alerts/Errors.svelte';
+  import AlertSuccess from '$lib/components/alerts/Success.svelte';
+  import PostCard from '$lib/app/posts/PostCard.svelte';
+  import PostForm from '$lib/app/posts/PostForm.svelte';
 
-	h1 {
-		font-size: 2.8em;
-		text-transform: uppercase;
-		font-weight: 700;
-		margin: 0 0 0.5em 0;
-	}
+  export let posts,
+    error = '',
+    success = '';
+  let showForm = false;
+  let errors = [];
+  if (error !== '') {
+    errors.push(error);
+  }
 
-	figure {
-		margin: 0 0 1em 0;
-	}
+  function handleDestroy(event) {
+    const post = event.detail;
+    posts = posts.reduce((accum, p) => {
+      if (p.id !== post.id) {
+        accum.push(p);
+      }
+      return accum;
+    }, []);
+  }
 
-	img {
-		width: 100%;
-		max-width: 400px;
-		margin: 0 0 1em 0;
-	}
-
-	p {
-		margin: 1em auto;
-	}
-
-	@media (min-width: 480px) {
-		h1 {
-			font-size: 4em;
-		}
-	}
-</style>
+  function handleSave(event) {
+    const data = event.detail;
+    posts = [data, ...posts];
+    showForm = !showForm;
+  }
+</script>
 
 <svelte:head>
-	<title>Sapper project template</title>
+  <title>ProgrammingTIL Svelte and SvelteKit</title>
 </svelte:head>
 
-<h1>Great success!</h1>
-
-<figure>
-	<img alt="Success Kid" src="{successkid}">
-	<figcaption>Have fun with Sapper!</figcaption>
-</figure>
-
-<p><strong>Try editing this file (src/routes/index.svelte) to test live reloading.</strong></p>
+<div class="max-w-sm mx-auto py-6">
+  <div class={success || errors.length > 0 ? 'mb-3' : ''}>
+    <AlertSuccess {success} />
+    <AlertErrors {errors} />
+  </div>
+  <a
+    href="/posts/new"
+    type="button"
+    class:hidden={!$loggedIn}
+    class="px-3 py-2 rounded-md leading-5 font-medium mb-6 cursor-pointer
+      focus:outline-none focus:text-white focus:bg-primary-300
+    text-neutral-800 hover:text-white hover:bg-primary-300"
+    on:click|preventDefault={() => {
+      showForm = !showForm;
+    }}>New Post</a
+  >
+  {#if showForm}
+    <PostForm
+      shadow={true}
+      type="new"
+      bind:errors
+      bind:success
+      on:saved={handleSave}
+      on:cancel={() => (showForm = !showForm)}
+    />
+  {/if}
+  <ul class="divide-y divide-gray-200 shadow sm:rounded-md sm:overflow-hidden">
+    {#each posts as post}
+      <li
+        class="relative bg-white py-5 px-4 hover:bg-gray-50
+          focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
+      >
+        {#if post.edit}
+          <PostForm
+            type="update"
+            bind:post
+            bind:errors
+            bind:success
+            on:saved={() => (post.edit = !post.edit)}
+            on:cancel={() => (post.edit = !post.edit)}
+          />
+        {:else}
+          <PostCard bind:post bind:errors bind:success on:destroy={handleDestroy} />
+        {/if}
+      </li>
+    {/each}
+  </ul>
+</div>

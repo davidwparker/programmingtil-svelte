@@ -1,162 +1,377 @@
-# sapper-template
-
-The default template for setting up a [Sapper](https://github.com/sveltejs/sapper) project. Can use either Rollup or webpack as bundler.
-
-
-## Getting started
-
-
-### Using `degit`
-
-To create a new Sapper project based on Rollup locally, run
-
-```bash
-npx degit "sveltejs/sapper-template#rollup" my-app
-```
-
-For a webpack-based project, instead run
-
-```bash
-npx degit "sveltejs/sapper-template#webpack" my-app
-```
-
-[`degit`](https://github.com/Rich-Harris/degit) is a scaffolding tool that lets you create a directory from a branch in a repository.
-
-Replace `my-app` with the path where you wish to create the project.
-
-
-### Using GitHub templates
-
-Alternatively, you can create the new project as a GitHub repository using GitHub's template feature.
-
-Go to either [sapper-template-rollup](https://github.com/sveltejs/sapper-template-rollup) or [sapper-template-webpack](https://github.com/sveltejs/sapper-template-webpack) and click on "Use this template" to create a new project repository initialized by the template.
-
-
-### Running the project
-
-Once you have created the project, install dependencies and run the project in development mode:
-
-```bash
-cd my-app
-npm install # or yarn
-npm run dev
-```
-
-This will start the development server on [localhost:3000](http://localhost:3000). Open it and click around.
-
-You now have a fully functional Sapper project! To get started developing, consult [sapper.svelte.dev](https://sapper.svelte.dev).
-
-### Using TypeScript
-
-By default, the template uses plain JavaScript. If you wish to use TypeScript instead, you need some changes to the project:
-
- * Add `typescript` as well as typings as dependences in `package.json`
- * Configure the bundler to use [`svelte-preprocess`](https://github.com/sveltejs/svelte-preprocess) and transpile the TypeScript code.
- * Add a `tsconfig.json` file
- * Update the project code to TypeScript
-
-The template comes with a script that will perform these changes for you by running
-
-```bash
-node scripts/setupTypeScript.js
-```
-
-`@sapper` dependencies are resolved through `src/node_modules/@sapper`, which is created during the build. You therefore need to run or build the project once to avoid warnings about missing dependencies.
-
-The script does not support webpack at the moment.
-
-## Directory structure
-
-Sapper expects to find two directories in the root of your project —  `src` and `static`.
-
-
-### src
-
-The [src](src) directory contains the entry points for your app — `client.js`, `server.js` and (optionally) a `service-worker.js` — along with a `template.html` file and a `routes` directory.
-
-
-#### src/routes
-
-This is the heart of your Sapper app. There are two kinds of routes — *pages*, and *server routes*.
-
-**Pages** are Svelte components written in `.svelte` files. When a user first visits the application, they will be served a server-rendered version of the route in question, plus some JavaScript that 'hydrates' the page and initialises a client-side router. From that point forward, navigating to other pages is handled entirely on the client for a fast, app-like feel. (Sapper will preload and cache the code for these subsequent pages, so that navigation is instantaneous.)
-
-**Server routes** are modules written in `.js` files, that export functions corresponding to HTTP methods. Each function receives Express `request` and `response` objects as arguments, plus a `next` function. This is useful for creating a JSON API, for example.
-
-There are three simple rules for naming the files that define your routes:
-
-* A file called `src/routes/about.svelte` corresponds to the `/about` route. A file called `src/routes/blog/[slug].svelte` corresponds to the `/blog/:slug` route, in which case `params.slug` is available to the route
-* The file `src/routes/index.svelte` (or `src/routes/index.js`) corresponds to the root of your app. `src/routes/about/index.svelte` is treated the same as `src/routes/about.svelte`.
-* Files and directories with a leading underscore do *not* create routes. This allows you to colocate helper modules and components with the routes that depend on them — for example you could have a file called `src/routes/_helpers/datetime.js` and it would *not* create a `/_helpers/datetime` route.
-
-
-#### src/node_modules/images
-
-Images added to `src/node_modules/images` can be imported into your code using `import 'images/<filename>'`. They will be given a dynamically generated filename containing a hash, allowing for efficient caching and serving the images on a CDN.
-
-See [`index.svelte`](src/routes/index.svelte) for an example.
-
-
-#### src/node_modules/@sapper
-
-This directory is managed by Sapper and generated when building. It contains all the code you import from `@sapper` modules.
-
-
-### static
-
-The [static](static) directory contains static assets that should be served publicly. Files in this directory will be available directly under the root URL, e.g. an `image.jpg` will be available as `/image.jpg`.
-
-The default [service-worker.js](src/service-worker.js) will preload and cache these files, by retrieving a list of `files` from the generated manifest:
-
-```js
-import { files } from '@sapper/service-worker';
-```
-
-If you have static files you do not want to cache, you should exclude them from this list after importing it (and before passing it to `cache.addAll`).
-
-Static files are served using [sirv](https://github.com/lukeed/sirv).
-
-
-## Bundler configuration
-
-Sapper uses Rollup or webpack to provide code-splitting and dynamic imports, as well as compiling your Svelte components. With webpack, it also provides hot module reloading. As long as you don't do anything daft, you can edit the configuration files to add whatever plugins you'd like.
-
-
-## Production mode and deployment
-
-To start a production version of your app, run `npm run build && npm start`. This will disable live reloading, and activate the appropriate bundler plugins.
-
-You can deploy your application to any environment that supports Node 10 or above. As an example, to deploy to [Vercel Now](https://vercel.com) when using `sapper export`, run these commands:
-
-```bash
-npm install -g vercel
-vercel
-```
-
-If your app can't be exported to a static site, you can use the [vercel-sapper](https://github.com/thgh/vercel-sapper) builder. You can find instructions on how to do so in its [README](https://github.com/thgh/vercel-sapper#basic-usage).
-
-
-## Using external components
-
-When using Svelte components installed from npm, such as [@sveltejs/svelte-virtual-list](https://github.com/sveltejs/svelte-virtual-list), Svelte needs the original component source (rather than any precompiled JavaScript that ships with the component). This allows the component to be rendered server-side, and also keeps your client-side app smaller.
-
-Because of that, it's essential that the bundler doesn't treat the package as an *external dependency*. You can either modify the `external` option under `server` in [rollup.config.js](rollup.config.js) or the `externals` option in [webpack.config.js](webpack.config.js), or simply install the package to `devDependencies` rather than `dependencies`, which will cause it to get bundled (and therefore compiled) with your app:
-
-```bash
-npm install -D @sveltejs/svelte-virtual-list
-```
-
-## Troubleshooting
-
-Using Windows and WSL2?
-
-If your project lives outside the WSL root directory, [this limitation](https://github.com/microsoft/WSL/issues/4169) is known to cause live-reloading to fail. See [this issue](https://github.com/sveltejs/sapper/issues/1150) for details.
-
-## Bugs and feedback
-
-Sapper is in early development, and may have the odd rough edge here and there. Please be vocal over on the [Sapper issue tracker](https://github.com/sveltejs/sapper/issues).
-
 # COMMANDS and things
+
+```
+npm run dev -- --port 5000
+```
+
+## EPISODE 24 - Two ways to create a Sitemap
+
+```
+new file:   src/routes/sitemap.xml.js
+```
+
+## EPISODE 23 - Deletes and Updating comments with SvelteKit Endpoints
+
+```
+modified:   README.md
+modified:   src/lib/app/posts/PostCard.svelte
+modified:   src/lib/app/posts/PostForm.svelte
+modified:   src/lib/components/navbar/Nav.svelte
+modified:   src/lib/shared/apis.js
+modified:   src/routes/index.svelte
+modified:   src/routes/posts/index.js
+modified:   src/routes/users/sign_in.js
+modified:   src/routes/users/sign_out.js
+new file:   src/routes/posts/[id].js
+```
+
+## EPISODE 22 - Doing more with endpoints and no-JS
+
+```
+modified:   README.md
+modified:   src/hooks/index.js
+modified:   src/lib/app/posts/PostCard.svelte
+modified:   src/lib/app/posts/PostForm.svelte
+modified:   src/lib/components/navbar/Nav.svelte
+modified:   src/lib/shared/stores.js
+modified:   src/routes/$layout.svelte
+modified:   src/routes/index.svelte
+modified:   src/routes/posts/index.js
+modified:   src/routes/users/sign-in.svelte
+modified:   src/routes/users/sign_in.js
+modified:   src/routes/users/sign_out.js
+new file:   src/routes/posts/[slug]/
+new file:   src/routes/posts/new.svelte
+```
+
+## EPISODE 21 - implementing useContext and cookies with our JWTs and AUDs
+
+```
+README.md
+package-lock.json
+package.json
+src/ambient.d.ts
+src/global.d.ts
+src/hooks/index.js
+src/lib/app/comments/CommentForm.svelte
+src/lib/app/posts/PostCard.svelte
+src/lib/app/posts/PostForm.svelte
+src/lib/components/buttons/Submit.svelte
+src/lib/components/layouts/ProtectedLayout.svelte
+src/lib/components/navbar/Nav.svelte
+src/lib/shared/apis.js
+src/lib/shared/helpers.js
+src/lib/shared/stores.js
+src/routes/$layout.svelte
+src/routes/index.svelte
+src/routes/posts/[slug].svelte
+src/routes/posts/index.js
+src/routes/users/[slug].svelte
+src/routes/users/settings.svelte
+src/routes/users/sign-in.svelte
+src/routes/users/sign-up.svelte
+src/routes/users/sign_in.js
+src/routes/users/sign_out.js
+src/service-worker.js
+```
+
+## EPISODE 20 - refactors and creating comments
+
+```
+new file:   .prettierrc
+modified:   README.md
+new file:   src/lib/app/comments/CommentCard.svelte
+new file:   src/lib/app/comments/CommentForm.svelte
+new file:   src/lib/app/posts/PostCard.svelte
+new file:   src/lib/app/posts/PostForm.svelte
+modified:   src/lib/shared/helpers.js
+modified:   src/routes/index.svelte
+modified:   src/routes/posts/[slug].svelte
+modified:   src/routes/users/sign-in.svelte
+modified:   src/routes/users/sign-up.svelte
+```
+
+## EPISODE 19 - Post Slug and Display Comments
+
+```
+# modified:   src/routes/index.svelte
+# new file:   src/routes/posts/[slug].svelte
+# modified:   src/routes/users/[slug].svelte
+# modified:   src/routes/users/sign-in.svelte
+```
+
+## EPISODE 18 - Simple Protected Layout pages
+
+```
+#	new file:   src/lib/components/layouts/ProtectedLayout.svelte
+#	modified:   src/lib/components/navbar/Nav.svelte
+#	modified:   src/routes/about.svelte
+#	modified:   src/routes/users/settings.svelte
+```
+
+## EPISODE 17 - friendly URLs (named routes)
+
+```
+#	modified:   README.md
+#	modified:   package-lock.json
+#	modified:   package.json
+#	modified:   src/app.html
+#	modified:   src/routes/$error.svelte
+#	modified:   src/routes/index.svelte
+#	new file:   src/routes/users/[slug].svelte
+#	modified:   svelte.config.cjs
+```
+
+## EPISODE 16 - cookies
+
+## EPISODE 15
+
+``` ruby
+# Update Rails post_policy: if didn't already
+# Users can only create up to 3 posts
+def create?
+  # user.posts.size < 3
+  true
+end
+```
+
+```
+package.json
+src/lib/components/navbar/Nav.svelte
+src/routes/index.svelte
+src/routes/users/settings.svelte
+```
+
+Thanks to @flayks and @mushineesan on Discord for helping me with DOMPurify.
+
+
+* Prettier
+* Nav = klasses
+* Settings = goto if no $user
+* index = transition, create form, edit form, delete post
+
+## EPISODE 14
+
+Load fake DB
+```
+rails c (or create data how you want first)
+
+Content from: https://jaspervdj.be/lorem-markdownum/
+
+content = """
+# Nec latratibus armos una
+
+## Exactus dederunt dignabitur ventre armis altera
+
+Lorem markdownum oculos. Pennis sunt hoc olim qui, clausa
+[quo](http://traharrobustior.net/) illa adpositi. Auratis latet ense quondam
+Occupat tempus.
+
+- Flammae vastique est quod quod solito honor
+- Ara cursu
+- Vidisse motibus
+
+Et testa extemplo pectoris mactatarumque fatentem rupit: terruit arva, non. Ait
+[mons arva non](http://www.quoque-scelerato.com/), non atque perpetimur satis
+coniuge rostro enim, *est* fugit? A sum per addendum in mihi carminibus fecit,
+dedisset *aequora*. Functo aut officioque pharetra gentis gerebat Phasidos ab
+tenus sunt sequitur nulla tinguatur occupat Palladaque. Postarum dum felix, pia
+nimbi facta, serpens pondere generis forte potest sanguine arma lactantiaque
+tegit!
+
+Erit ut correpti, quique veri auditaque hastam fetibus iuventus harenis utroque
+linguae iungat. [Incaluere illa](http://quod.org/pericula) labentia ventris in
+angues ne suas sulcum tiliae exanimem obvertit, in fames ursi accipit praecordia
+*at*. Ictu ut, meo qui tamen quisquis, nunc quem alternare, umero! Ornatos
+proelia magno, **inde longius** et adspexit iaculoque condidit septem dolet
+Damasicthona *colla* refert veniam.
+
+## Quod cur saturae Armeniae Oriente
+
+Erat propiore quas quaerentibus victima memorabat artis inmittitur notatas illis
+quos demittant trepidare: procul. Quaeritur liceret iamque? Has in nec croceo
+cum possit, successor perterrita voles blandimenta deos *puellam*, dixit, annos
+nil. Viscera e Pallas illis; erat vocant mirum sed! Filius unxit carpit *addit
+primum regna* herbas, custodemque [inmittitur](http://www.desibi.org/sub) nutrit
+inspirare caligine fiducia currus, tibi senta retenta.
+
+- Minor cruor versato et Tethyn
+- Hunc novit postquam dura sua avidissima ad
+- Novato in sedit expugnacior expulit concurreret audita
+- Pars in sed cum Minos quid rimas
+- Antra sub corpus castos
+- Ardere illud inde longe
+
+Nec *monte* celerem monet at pavere, virtus ebibit Dianae. Des nunc aut suis:
+certum fortunata at curis [et](http://www.adsensit.org/alimentaque.html).
+Mercede non male illa Peleusque, frater vicit et vocem, in noctis. Fecerat
+templum ponit, substravit, *unco se quam* notum et. Sed dimittere fervet.
+
+    drm_push.mysql = usSnippetScraping;
+    uddi -= terminalHexadecimal;
+    if (21 > -4) {
+        on_vga.uat_bmp_directory(lossless, dimm + baseIpBlu, rate(
+                click_standalone_full));
+        banner.frameworkCDel(backlinkShell, 2);
+    } else {
+        ibm.addressQbe += qwerty_syn_pdf;
+        language(3224, architectureBarDesktop);
+        baseband_software_source(modifierRestore - ascii);
+    }
+    var riscCtr = card_kilohertz.dropFlopsAffiliate(matrixEditor) +
+            protector_file(sharewareBrowserRecursion + freewarePaper);
+    recursionWindow += latency * websiteEbookPlagiarism;
+
+Et linquit cedere de intrarunt in sumere Cythno dum, stellatus solito compressit
+nosset et exsiliantque inmitis **profundi**. Iecur legumque avidoque sublimia
+taedia pavit qui furor dant truces et *deque*.
+"""
+
+20.times do |n|
+  user = User.all.sample
+  Post.create!(
+    user: user,
+    title: "This is a test #{n}",
+    content: content,
+    published_at: Time.now - rand(1..8).day
+  )
+end
+```
+
+New NPM packages:
+```
+npm i snarkdown --save
+npm i @tailwindcss/line-clamp --save
+```
+
+```
+src/app.html
+src/routes/$layout.svelte
+src/routes/index.svelte
+tailwind.config.cjs
+```
+
+## EPISODE 13
+
+Backend, and why using localStorage:
+https://github.com/waiting-for-dev/devise-jwt/issues/126
+
+tldr;
+* cannot use different domains.
+* long-term, we'll be using the same APIs with our mobile app.
+* update to check and compare/use the AUD
+
+Concerns
+* XSS
+
+```
+package.json
+src/components/navbar/Nav.svelte
+src/routes/_layout.svelte
+src/routes/users/settings.svelte
+src/routes/users/sign-in.svelte
+src/shared/helpers.js
+src/shared/stores.js
+```
+
+## EPISODE 12
+
+```
+new alerts
+new submit button
+new icons
+cmp/navbar/nav > settings link
+routes/users/sign-in > submit button
+routes/users/sign-up > submit button
+routes/users/settings
+```
+
+## EPISODE 10
+
+```
+sign-up.svelte
+sign-in.svelte
+```
+
+## EPISODE 9
+
+```
+.env > API_ENDPOINT
+package.json
+sign-in.svelte
+sign-up.svelte
+Nav.svelte
+```
+
+Sign up Vercel.
+Add project via Vercel > Github (authorize).
+(let fail if not "main/prod")
+Change branch (if not on main yet), for example this is on `ep9`.
+Set ENV Variables. For this one, since this is "production" (for now), we'll put on staging + production.
+We'll later setup a proper staging vs production environment on Vercel.
+
+TODO: once this episode is published, we'll be switching our main branch around.
+
+## EPISODE 8
+
+```
+src/components/navbar/Nav.svelte
+src/routes/users/sign-in.svelte
+src/shared/stores.js
+Bugfix: sign in AUD
+```
+
+## EPISODE 7
+
+```
+src/components/navbar/Nav.svelte
+src/routes/_layout.svelte
+src/routes/users/sign-in.svelte
+src/shared/stores.js
+```
+
+## EPISODE 6
+
+Basic styling
+
+## EPISODE 5
+
+```
+package.json
+webpack.config.js
+static/tailwind.css
+postcss/*
+```
+
+## EPISODE 4
+
+## EPISODE 3
+
+## EPISODE 2 - short install some packages + discuss
+
+package.json
+```
+  "dependencies": {
+    "@fullhuman/postcss-purgecss": "^2.3.0",
+    "@tailwindcss/forms": "^0.2.1",
+    "autoprefixer": "^9.8.6",
+    "body-parser": "^1.19.0",
+    "cssnano": "^4.1.10",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "postcss": "^7.0.35",
+    "sirv": "^1.0.11", *
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1"
+  },
+  "devDependencies": {
+    "css-loader": "^3.6.0",
+    "node-fetch": "^2.6.1",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^7.1.1",
+    "postcss-loader": "^3.0.0",
+  }
+```
 
 ## EPISODE 1
 
