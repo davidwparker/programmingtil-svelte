@@ -2,8 +2,7 @@
   import * as api from '$lib/shared/apis';
 
   export async function load({ page, session }) {
-    const url = 'api/v1/posts';
-    const { response, json } = await api.get(session.API_ENDPOINT, url);
+    const { response, json } = await api.get(session.BASE_ENDPOINT, 'posts');
     const success = page.query.get('success') ? 'Success!' : undefined;
     const error = page.query.get('error') ? 'Error!' : undefined;
     if (response.status === 200) {

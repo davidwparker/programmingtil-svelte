@@ -4,6 +4,18 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 28 - adding RSS feed
+
+Resources
+* https://validator.w3.org/feed/check.cgi
+
+```
+modified:   src/routes/index.svelte
+modified:   src/routes/posts/index.ts
+new file:   src/routes/rss.ts
+```
+
+
 ## EPISODE 27 - adding typescript to an existing application
 
 ```
@@ -63,6 +75,9 @@ modified:   src/routes/users/sign_out.js
 ```
 
 ## EPISODE 25 - upgrading between sveltekit versions
+
+Resources:
+* https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md
 
 ```
 npm update

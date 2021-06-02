@@ -14,12 +14,12 @@ export const createWritableStore = (key: string, startValue: any): any => {
         set(JSON.parse(json));
       }
 
-      subscribe(current => {
+      subscribe((current) => {
         localStorage.setItem(key, JSON.stringify(current));
       });
-    }
+    },
   };
-}
+};
 
 export const user = createWritableStore('user', {});
 

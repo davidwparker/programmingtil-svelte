@@ -11,3 +11,4 @@ yarn-error.log
 .vercel_build_output
 /tmp/
 /.svelte-kit
+dump.rdb
