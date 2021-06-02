@@ -4,6 +4,52 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 26 - better protected routes with endpoints, hooks, and load
+
+```
+modified:   src/hooks.js
+deleted:    src/hooks/index.js
+modified:   src/lib/app/posts/PostCard.svelte
+deleted:    src/lib/components/layouts/ProtectedLayout.svelte
+modified:   src/lib/components/navbar/Nav.svelte
+modified:   src/lib/shared/helpers.js
+modified:   src/lib/shared/stores.js
+modified:   src/routes/__layout.svelte
+modified:   src/routes/about.svelte
+modified:   src/routes/index.svelte
+modified:   src/routes/users/settings.svelte
+modified:   src/routes/users/sign-in.svelte
+modified:   src/routes/users/sign_in.js
+modified:   src/routes/users/sign_out.js
+```
+
+## EPISODE 25 - upgrading between sveltekit versions
+
+```
+npm update
+```
+
+```
+modified:   .gitignore
+new file:   .prettierignore
+modified:   README.md
+modified:   package-lock.json
+modified:   package.json
+modified:   src/global.d.ts
+modified:   src/hooks/index.js
+renamed:    src/hooks/index.js -> src/hooks.js
+modified:   src/lib/shared/apis.js
+renamed:    src/routes/$error.svelte -> src/routes/__error.svelte
+renamed:    src/routes/$layout.svelte -> src/routes/__layout.svelte
+modified:   src/routes/posts/[id].js
+modified:   src/routes/posts/index.js
+modified:   src/routes/users/sign_in.js
+modified:   src/routes/users/sign_out.js
+deleted:    svelte.config.cjs
+new file:   svelte.config.js
+modified:   tailwind.config.cjs
+```
+
 ## EPISODE 24 - Two ways to create a Sitemap
 
 ```

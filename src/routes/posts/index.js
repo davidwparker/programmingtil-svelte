@@ -3,14 +3,11 @@ import * as api from '$lib/shared/apis.js';
 
 // POST /posts
 export const post = async (request) => {
-  let body = request.body;
-  if (body.entries instanceof Function) {
-    body = api.getFormBody(request.body);
-  }
+  const body = api.getFormBody(request.body);
   const cookies = cookie.parse(request.headers.cookie || '');
   const cookiesArray = [];
   const { response, json } = await api.post(
-    request.context.API_ENDPOINT,
+    request.locals.API_ENDPOINT,
     `api/v1/posts/`,
     {
       post: {

@@ -3,7 +3,7 @@
   import { session } from '$app/stores';
   import { onMount } from 'svelte';
   import * as api from '$lib/shared/apis.js';
-  import { jwt, loggedIn, user } from '$lib/shared/stores.js';
+  import { jwt, user } from '$lib/shared/stores.js';
 
   const klasses =
     'px-3 py-2 rounded-md leading-5 font-medium \
@@ -24,9 +24,8 @@
     if (response.status === 200) {
       await goto('/');
       jwt.set('UNKNOWN');
-      loggedIn.set(false);
       user.set({});
-      userId.set(0);
+      session.set({ ...$session, userId: 0, loggedIn: false });
     } else if (response.status === 500) {
       errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
     } else {
@@ -40,15 +39,21 @@
     <div class="">
       <a href="/" class={klasses}>Home</a>
       <a href="/about" class="{klasses} ml-1">About</a>
-      <a href="/users/sign-in/" class="{klasses} ml-1" class:hidden={$loggedIn}> Sign In </a>
-      <a href="/users/sign-up/" class="{klasses} ml-1" class:hidden={$loggedIn}> Register </a>
-      <a href="/users/settings/" class="{klasses} ml-1" class:hidden={!$loggedIn}> Settings </a>
+      <a href="/users/sign-in/" class="{klasses} ml-1" class:hidden={$session.loggedIn}>
+        Sign In
+      </a>
+      <a href="/users/sign-up/" class="{klasses} ml-1" class:hidden={$session.loggedIn}>
+        Register
+      </a>
+      <a href="/users/settings/" class="{klasses} ml-1" class:hidden={!$session.loggedIn}>
+        Settings
+      </a>
       <form action="/users/sign_out?_method=delete" method="post" class="inline">
         <input
           type="submit"
           value="Sign Out"
           class="{klasses} ml-1 cursor-pointer"
-          class:hidden={!$loggedIn}
+          class:hidden={!$session.loggedIn}
           on:click|preventDefault={handleSignOut}
         />
       </form>

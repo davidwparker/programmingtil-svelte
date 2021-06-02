@@ -1,29 +1,30 @@
 import cookie from 'cookie';
 
-export const getContext = (request) => {
+export const getSession = (request) => {
   const cookies = cookie.parse(request.headers.cookie || '');
   const loggedIn = cookies.jwt !== undefined || false;
   const userId = cookies.userId || 0;
+  const username = cookies.username || '';
+  const displayName = cookies.displayName || '';
   return {
     API_ENDPOINT: import.meta.env.VITE_API_ENDPOINT,
     BASE_ENDPOINT: import.meta.env.VITE_BASE_ENDPOINT,
     DEBUG_MODE: import.meta.env.VITE_DEBUG_MODE,
     loggedIn,
     userId,
-  };
-};
-
-export const getSession = (context) => {
-  return {
-    API_ENDPOINT: import.meta.env.VITE_API_ENDPOINT,
-    BASE_ENDPOINT: import.meta.env.VITE_BASE_ENDPOINT,
-    DEBUG_MODE: import.meta.env.VITE_DEBUG_MODE,
-    loggedIn: context.context.loggedIn,
-    userId: context.context.userId,
+    user: {
+      id: userId,
+      displayName,
+      username,
+    },
   };
 };
 
 export const handle = async ({ request, render }) => {
+  request.locals.API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
+  request.locals.BASE_ENDPOINT = import.meta.env.VITE_BASE_ENDPOINT;
+  request.locals.DEBUG_MODE = import.meta.env.VITE_DEBUG_MODE;
+
   // TODO https://github.com/sveltejs/kit/issues/1046
   const response = await render({
     ...request,

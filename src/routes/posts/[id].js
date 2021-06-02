@@ -3,14 +3,11 @@ import * as api from '$lib/shared/apis.js';
 
 // POST /posts/:id
 export const post = async (request) => {
-  let body = request.body;
-  if (body.entries instanceof Function) {
-    body = api.getFormBody(request.body);
-  }
+  const body = api.getFormBody(request.body);
   const cookies = cookie.parse(request.headers.cookie || '');
   const cookiesArray = [];
   const { response, json } = await api.put(
-    request.context.API_ENDPOINT,
+    request.locals.API_ENDPOINT,
     `api/v1/posts/${request.params.id}`,
     {
       post: {
@@ -54,7 +51,7 @@ export const del = async (request) => {
   const cookies = cookie.parse(request.headers.cookie || '');
   const cookiesArray = [];
   const { response, json } = await api.del(
-    request.context.API_ENDPOINT,
+    request.locals.API_ENDPOINT,
     `api/v1/posts/${request.params.id}`,
     {},
     {

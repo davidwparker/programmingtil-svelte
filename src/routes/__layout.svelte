@@ -1,14 +1,14 @@
 <script context="module">
-  import { loggedIn, userId } from '$lib/shared/stores.js';
+  import { user } from '$lib/shared/stores.js';
 
   export async function load({ session }) {
-    loggedIn.set(session.loggedIn || false);
-    userId.set(session.userId || 0);
+    user.set({ user: session.user });
     return {};
   }
 </script>
 
 <script>
+  import { session } from '$app/stores';
   import { onMount } from 'svelte';
   import { audBuilder, browserDetector } from '$lib/shared/helpers.js';
   import { aud, browser, js, os } from '$lib/shared/stores.js';
@@ -26,7 +26,10 @@
   });
 </script>
 
-<main class="bg-primary-100 min-h-screen {$js ? 'js' : 'no-js'}" class:logged-in={$loggedIn}>
+<main
+  class="bg-primary-100 min-h-screen {$js ? 'js' : 'no-js'}"
+  class:logged-in={$session.loggedIn}
+>
   <Nav />
   <slot />
 </main>
