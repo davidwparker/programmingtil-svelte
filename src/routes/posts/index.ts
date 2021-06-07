@@ -1,8 +1,9 @@
+import type { Response, Request } from '@sveltejs/kit';
 import cookie from 'cookie';
-import * as api from '$lib/shared/apis.js';
+import * as api from '$lib/shared/apis';
 
 // POST /posts
-export const post = async (request) => {
+export const post = async (request: Request): Promise<Response> => {
   const body = api.getFormBody(request.body);
   const cookies = cookie.parse(request.headers.cookie || '');
   const cookiesArray = [];
@@ -21,7 +22,7 @@ export const post = async (request) => {
     }
   );
   // TODO: check for bad JWT/delete cookie.
-  let headers = {
+  const headers = {
     ...response.headers,
     'set-cookie': cookiesArray,
   };

@@ -1,9 +1,10 @@
-import * as api from '$lib/shared/apis.js';
+import type { Response, Request } from '@sveltejs/kit';
+import * as api from '$lib/shared/apis';
 
 //
 // POST /users/sign_in
 //
-export const post = async (request) => {
+export const post = async (request: Request): Promise<Response> => {
   const body = api.getFormBody(request.body);
   const cookiesArray = [];
   const { response, json } = await api.post(
@@ -11,9 +12,9 @@ export const post = async (request) => {
     'users/sign_in',
     {
       user: { login: body['login'], password: body['password'] },
-      browser: request.body?.browser,
-      ip: request.body?.ip,
-      os: request.body?.os,
+      browser: body['browser'],
+      ip: body['ip'],
+      os: body['os'],
     },
     { aud: request.headers.jwt_aud || 'UNKNOWN' }
   );

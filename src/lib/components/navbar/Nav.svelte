@@ -2,8 +2,8 @@
   import { goto } from '$app/navigation';
   import { session } from '$app/stores';
   import { onMount } from 'svelte';
-  import * as api from '$lib/shared/apis.js';
-  import { jwt, user } from '$lib/shared/stores.js';
+  import * as api from '$lib/shared/apis';
+  import { jwt, user } from '$lib/shared/stores';
 
   const klasses =
     'px-3 py-2 rounded-md leading-5 font-medium \

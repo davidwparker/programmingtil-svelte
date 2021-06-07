@@ -2,8 +2,8 @@
   import { createEventDispatcher } from 'svelte';
   import { slide } from 'svelte/transition';
   import { session } from '$app/stores';
-  import * as api from '$lib/shared/apis.js';
-  import { aud } from '$lib/shared/stores.js';
+  import * as api from '$lib/shared/apis';
+  import { aud } from '$lib/shared/stores';
   import SubmitButton from '$lib/components/buttons/Submit.svelte';
 
   export let post = undefined,

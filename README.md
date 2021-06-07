@@ -4,6 +4,45 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 27 - adding typescript to an existing application
+
+```
+new file:   .eslintrc.cjs
+modified:   README.md
+modified:   package-lock.json
+modified:   package.json
+deleted:    scripts/setupTypeScript.js
+renamed:    src/hooks.js -> src/hooks.ts
+modified:   src/lib/app/comments/CommentForm.svelte
+modified:   src/lib/app/posts/PostCard.svelte
+modified:   src/lib/app/posts/PostForm.svelte
+renamed:    src/lib/components/icons/index.js -> src/lib/components/icons/index.ts
+modified:   src/lib/components/navbar/Nav.svelte
+deleted:    src/lib/shared/apis.js
+new file:   src/lib/shared/apis.ts
+renamed:    src/lib/shared/helpers.js -> src/lib/shared/helpers.ts
+renamed:    src/lib/shared/stores.js -> src/lib/shared/stores.ts
+modified:   src/routes/__layout.svelte
+modified:   src/routes/index.svelte
+renamed:    src/routes/posts/[id].js -> src/routes/posts/[id].ts
+modified:   src/routes/posts/[slug].svelte
+modified:   src/routes/posts/[slug]/edit.svelte
+renamed:    src/routes/posts/index.js -> src/routes/posts/index.ts
+deleted:    src/routes/sitemap.xml.js
+new file:   src/routes/sitemap.xml.ts
+modified:   src/routes/users/[slug].svelte
+modified:   src/routes/users/settings.svelte
+modified:   src/routes/users/sign-in.svelte
+modified:   src/routes/users/sign-up.svelte
+renamed:    src/routes/users/sign_in.js -> src/routes/users/sign_in.ts
+renamed:    src/routes/users/sign_out.js -> src/routes/users/sign_out.ts
+deleted:    src/service-worker.js
+new file:   src/service-worker.ts
+deleted:    static/tailwind.css
+modified:   svelte.config.js
+new file:   tsconfig.json
+```
+
 ## EPISODE 26 - better protected routes with endpoints, hooks, and load
 
 ```

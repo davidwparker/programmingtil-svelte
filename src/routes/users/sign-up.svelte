@@ -1,6 +1,6 @@
 <script>
   import { session } from "$app/stores";
-  import * as api from "$lib/shared/apis.js";
+  import * as api from "$lib/shared/apis";
   import SubmitButton from "$lib/components/buttons/Submit.svelte";
   import {
     UiExclamationCircleSolid,

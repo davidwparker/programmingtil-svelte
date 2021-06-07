@@ -12,7 +12,7 @@
   // This function runs both during server-side rendering and in the client,...
   //
   // so I went with just waiting until mounted to make the API request, as it's not idempotent.
-  // import * as api from "$lib/shared/apis.js";
+  // import * as api from "$lib/shared/apis";
   // export async function load({ page, session }) {
   //   if (page.query.get('confirmation_token')) {
   //     const url = `users/confirmation?confirmation_token=${page.query.get('confirmation_token')}`;
@@ -30,8 +30,8 @@
   import { dev } from '$app/env';
   import { goto } from '$app/navigation';
   import { page, session } from '$app/stores';
-  import * as api from '$lib/shared/apis.js';
-  import { aud, browser, ip, os, user } from '$lib/shared/stores.js';
+  import * as api from '$lib/shared/apis';
+  import { aud, browser, ip, os, user } from '$lib/shared/stores';
   import SubmitButton from '$lib/components/buttons/Submit.svelte';
   import { UiLockSolid } from '$lib/components/icons';
 

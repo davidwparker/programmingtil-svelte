@@ -1,6 +1,6 @@
 import sha256 from 'crypto-js/sha256.js';
 
-export function audBuilder(bd) {
+export function audBuilder(bd: any): string {
   const version = parseInt(bd.browser.version);
   const str = `${bd.os.name}||${bd.os.version}||||${bd.browser.name}||${version}`;
   return sha256(str).toString();
@@ -12,7 +12,7 @@ export function audBuilder(bd) {
  * Usage: const bd = browserDetector(navigator, window).init();
  * bd.os.{name|version}, bd.browser.{name|version}
  */
-export function browserDetector(navigator, window) {
+export function browserDetector(navigator: any, window: any): any {
   const module = {
     options: [],
     header: [navigator.platform, navigator.userAgent, navigator.appVersion, navigator.vendor, window.opera],
@@ -39,7 +39,7 @@ export function browserDetector(navigator, window) {
       { name: 'Mozilla', value: 'Mozilla', version: 'Mozilla' },
     ],
     init: function () {
-      let agent = this.header.join(' '),
+      const agent = this.header.join(' '),
         os = this.matchItem(agent, this.dataOS),
         browser = this.matchItem(agent, this.dataBrowser);
       return { os, browser };
@@ -88,15 +88,15 @@ export function browserDetector(navigator, window) {
 /*
  * Get a specific cookie by name
  */
-export function getCookie(name) {
+export function getCookie(name: string): string {
   return document.cookie.split('; ').find(row => row.startsWith(name));
 }
 
 /*
  * Get the value of a specific cookie by name
  */
-export function getCookieValue(name) {
-  let cookiesPresent = getCookie(name);
+export function getCookieValue(name: string): string|boolean {
+  const cookiesPresent = getCookie(name);
   if (cookiesPresent) {
     return cookiesPresent.split('=')[1];
   }

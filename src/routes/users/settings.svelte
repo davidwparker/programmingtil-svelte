@@ -9,8 +9,8 @@
 <script>
   import { goto } from '$app/navigation';
   import { page, session } from '$app/stores';
-  import { aud, user } from '$lib/shared/stores.js';
-  import * as api from '$lib/shared/apis.js';
+  import { aud, user } from '$lib/shared/stores';
+  import * as api from '$lib/shared/apis';
   import AlertErrors from '$lib/components/alerts/Errors.svelte';
   import AlertSuccess from '$lib/components/alerts/Success.svelte';
   import SubmitButton from '$lib/components/buttons/Submit.svelte';

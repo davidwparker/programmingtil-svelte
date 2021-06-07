@@ -1,5 +1,5 @@
 <script context="module">
-  import * as api from '$lib/shared/apis.js';
+  import * as api from '$lib/shared/apis';
 
   export async function load({ page, session }) {
     const url = 'api/v1/posts';
