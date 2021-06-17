@@ -1,12 +1,8 @@
 <script>
-  import { session } from "$app/stores";
-  import * as api from "$lib/shared/apis";
-  import SubmitButton from "$lib/components/buttons/Submit.svelte";
-  import {
-    UiExclamationCircleSolid,
-    UiGreenCheck,
-    UiLockSolid
-  } from '$lib/components/icons';
+  import { session } from '$app/stores';
+  import * as api from '$lib/shared/apis';
+  import SubmitButton from '$lib/components/buttons/Submit.svelte';
+  import { UiExclamationCircleSolid, UiGreenCheck, UiLockSolid } from '$lib/components/icons';
 
   let email, password, username;
   let errors = [],
@@ -19,8 +15,7 @@
     if (which === 'username') {
       blurUsername = true;
       queryString = `?username=${username}`;
-    }
-    else if (which === 'email') {
+    } else if (which === 'email') {
       blurEmail = true;
       queryString = `?email=${email}`;
     }
@@ -31,17 +26,16 @@
     );
 
     if (which === 'username') {
-      okUsername = (response.status === 200 && json.data);
-    }
-    else if (which === 'email') {
-      okEmail = (response.status === 200 && json.data);
+      okUsername = response.status === 200 && json.data;
+    } else if (which === 'email') {
+      okEmail = response.status === 200 && json.data;
     }
   }
 
   async function handleSubmit() {
     submitting = true;
     errors = [];
-    const { response, json } = await api.post($session.API_ENDPOINT, "users", {
+    const { response, json } = await api.post($session.API_ENDPOINT, 'users', {
       user: { email, password, username },
     });
     if (response.status === 200) {
@@ -61,11 +55,9 @@
         errors = [...errors, `Username ${json.username[0]}`];
       }
     } else if (response.status === 404) {
-      errors = ["Registration cannot be found, try again soon."];
+      errors = ['Registration cannot be found, try again soon.'];
     } else if (response.status === 500) {
-      errors = [
-        "Oops, something went wrong! How embarrassing, try again soon.",
-      ];
+      errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
     }
     submitting = false;
   }
@@ -85,11 +77,7 @@
 </div>
 
 <div class="flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8">
-  <form
-    class="max-w-md w-full"
-    method="POST"
-    on:submit|preventDefault={handleSubmit}
-  >
+  <form class="max-w-md w-full" method="POST" on:submit|preventDefault={handleSubmit}>
     <div>
       <div class="relative">
         <input
@@ -98,10 +86,13 @@
           type="text"
           required
           class="block w-full rounded-t-md relative
-            focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10"
+            focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10
+            dark:bg-gray-700 dark:placeholder-gray-200 dark:text-white"
           placeholder="Username"
           bind:value={username}
-          on:blur={() => { handleBlur('username') }}
+          on:blur={() => {
+            handleBlur('username');
+          }}
         />
         {#if username && blurUsername}
           <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -114,9 +105,7 @@
         {/if}
       </div>
       {#if username && blurUsername && !okUsername}
-        <div class="m-2">
-          Username is taken
-        </div>
+        <div class="m-2">Username is taken</div>
       {/if}
       <div class="-mt-px relative">
         <input
@@ -125,11 +114,13 @@
           type="email"
           class="block w-full relative
             focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10
-          "
+            dark:bg-gray-700 dark:placeholder-gray-200 dark:text-white"
           required
           placeholder="Email address"
           bind:value={email}
-          on:blur={() => { handleBlur('email') }}
+          on:blur={() => {
+            handleBlur('email');
+          }}
         />
         {#if email && blurEmail}
           <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -142,9 +133,7 @@
         {/if}
       </div>
       {#if email && blurEmail && !okEmail}
-        <div class="m-2">
-          Email is taken
-        </div>
+        <div class="m-2">Email is taken</div>
       {/if}
       <div class="-mt-px">
         <input
@@ -152,7 +141,8 @@
           name="user[password]"
           type="password"
           class="block w-full rounded-b-md
-            focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10"
+            focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10
+            dark:bg-gray-700 dark:placeholder-gray-200 dark:text-white"
           required
           placeholder="Password (6 characters minimum)"
           bind:value={password}
@@ -161,9 +151,7 @@
     </div>
 
     <div class="mt-4">
-      <SubmitButton {submitting} full icon={UiLockSolid}>
-        Register
-      </SubmitButton>
+      <SubmitButton {submitting} full icon={UiLockSolid}>Register</SubmitButton>
     </div>
   </form>
 </div>

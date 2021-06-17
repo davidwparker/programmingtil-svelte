@@ -4,6 +4,26 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 29 - dark mode (part 1)
+
+Resources
+* https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually
+
+```
+modified:   src/lib/app/comments/CommentCard.svelte
+modified:   src/lib/app/comments/CommentForm.svelte
+modified:   src/lib/app/posts/PostCard.svelte
+modified:   src/lib/app/posts/PostForm.svelte
+modified:   src/lib/components/navbar/Nav.svelte
+modified:   src/routes/__layout.svelte
+modified:   src/routes/index.svelte
+modified:   src/routes/posts/[slug].svelte
+modified:   src/routes/posts/[slug]/edit.svelte
+modified:   src/routes/users/sign-in.svelte
+modified:   src/routes/users/sign-up.svelte
+modified:   tailwind.config.cjs
+```
+
 ## EPISODE 28 - adding RSS feed
 
 Resources
@@ -14,7 +34,6 @@ modified:   src/routes/index.svelte
 modified:   src/routes/posts/index.ts
 new file:   src/routes/rss.ts
 ```
-
 
 ## EPISODE 27 - adding typescript to an existing application
 

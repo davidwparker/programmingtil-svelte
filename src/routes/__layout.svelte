@@ -15,6 +15,8 @@
   import Nav from '$lib/components/navbar/Nav.svelte';
   import '../tailwind.css';
 
+  let dark = true;
+
   onMount(() => {
     if (navigator && window) {
       const bd = browserDetector(navigator, window).init();
@@ -26,10 +28,12 @@
   });
 </script>
 
-<main
-  class="bg-primary-100 min-h-screen {$js ? 'js' : 'no-js'}"
-  class:logged-in={$session.loggedIn}
->
-  <Nav />
-  <slot />
-</main>
+<div class:dark>
+  <main
+    class="bg-primary-100 dark:bg-black dark:text-white min-h-screen {$js ? 'js' : 'no-js'}"
+    class:logged-in={$session.loggedIn}
+  >
+    <Nav bind:dark />
+    <slot />
+  </main>
+</div>

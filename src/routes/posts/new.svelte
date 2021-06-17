@@ -18,11 +18,10 @@
       <AlertErrors {errors} />
     </div>
   {/if}
-  <div class="bg-white py-5 px-4 shadow sm:rounded-md sm:overflow-hidden">
-    <PostForm
-      type="new"
-      bind:errors
-      bind:success
-    />
+  <div
+    class="bg-white shadow sm:rounded-md sm:overflow-hidden
+    dark:bg-black dark:border dark:border-gray-200"
+  >
+    <PostForm type="new" bind:errors bind:success />
   </div>
 </div>

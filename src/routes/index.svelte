@@ -67,7 +67,8 @@
     class:hidden={!$session.loggedIn}
     class="px-3 py-2 rounded-md leading-5 font-medium mb-6 cursor-pointer
       focus:outline-none focus:text-white focus:bg-primary-300
-    text-neutral-800 hover:text-white hover:bg-primary-300"
+    text-neutral-800 hover:text-white hover:bg-primary-300
+    dark:text-white dark:hover:bg-primary-700 dark:focus:bg-primary-700"
     on:click|preventDefault={() => {
       showForm = !showForm;
     }}>New Post</a
@@ -82,11 +83,16 @@
       on:cancel={() => (showForm = !showForm)}
     />
   {/if}
-  <ul class="divide-y divide-gray-200 shadow sm:rounded-md sm:overflow-hidden">
+  <ul
+    class="mt-4 divide-y divide-gray-200 shadow sm:rounded-md sm:overflow-hidden
+      dark:border dark:border-gray-200"
+  >
     {#each posts as post}
       <li
-        class="relative bg-white py-5 px-4 hover:bg-gray-50
-          focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
+        class="relative py-5 px-4
+         bg-white
+          focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600
+          dark:bg-gray-800"
       >
         {#if post.edit}
           <PostForm
