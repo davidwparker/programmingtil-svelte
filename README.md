@@ -4,7 +4,9 @@
 npm run dev -- --port 5000
 ```
 
-## EPISODE 29 - dark mode (part 1)
+## EPISODE 30 - dark mode (part 1)
+
+Note: skipped name "episode 29" to sync up with my other SvelteKit post about examples.
 
 Resources
 * https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually
