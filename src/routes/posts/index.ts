@@ -2,6 +2,20 @@ import type { Response, Request } from '@sveltejs/kit';
 import cookie from 'cookie';
 import * as api from '$lib/shared/apis';
 
+// GET /posts
+export const get = async (): Promise<any> => {
+  const { response, json } = await api.get(
+    import.meta.env.VITE_API_ENDPOINT as string,
+    `api/v1/posts`,
+    {}
+  );
+  return {
+    status: 200,
+    body: json,
+    headers: { ...response.headers },
+  };
+};
+
 // POST /posts
 export const post = async (request: Request): Promise<Response> => {
   const body = api.getFormBody(request.body);

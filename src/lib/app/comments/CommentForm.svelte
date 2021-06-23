@@ -62,23 +62,31 @@
   on:submit|preventDefault={handleSubmit}
 >
   <!-- These classes only if new -->
-  <div class={type === 'new' ? 'shadow sm:rounded-md sm:overflow-hidden' : ''}>
-    <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+  <div
+    class={type === 'new'
+      ? 'shadow sm:rounded-md sm:overflow-hidden dark:border dark:border-gray-200'
+      : ''}
+  >
+    <div class="px-4 py-5 space-y-6 sm:p-6 bg-white dark:bg-gray-800">
       <div>
-        <label for="content" class="block text-sm font-medium text-gray-700"> Comment Body </label>
+        <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+          Comment Body
+        </label>
         <div class="mt-1">
           <textarea
             id="content"
             name="content"
             rows="3"
-            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+            class="shadow-sm mt-1 block w-full sm:text-sm border-gray-300 rounded-md
+              focus:ring-primary-500 focus:border-primary-500
+              dark:bg-gray-700 dark:placeholder-gray-200 dark:text-white"
             placeholder="Write something magnificent"
             bind:value={body}
           />
         </div>
-        <p class="mt-2 text-sm text-gray-500">Markdown supported</p>
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-300">Markdown supported</p>
       </div>
-      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+      <div class="px-4 py-3 text-right sm:px-6 bg-gray-50 dark:bg-gray-800">
         <SubmitButton {submitting}>{type === 'new' ? 'Save' : 'Update'}</SubmitButton>
         <input
           type="button"

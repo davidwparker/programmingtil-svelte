@@ -4,6 +4,54 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 31 - dark mode (part 2)
+
+```
+modified:   README.md
+modified:   src/hooks.ts
+new file:   src/lib/components/icons/UiMoonSolid.svelte
+new file:   src/lib/components/icons/UiSunOutline.svelte
+modified:   src/lib/components/icons/index.ts
+modified:   src/lib/components/navbar/Nav.svelte
+modified:   src/lib/shared/stores.ts
+new file:   src/lib/shared/theme.ts
+modified:   src/routes/__layout.svelte
+new file:   src/routes/app/theme.ts
+```
+
+## EPISODE 30 - dark mode (part 1)
+
+Note: skipped name "episode 29" to sync up with my other SvelteKit post about examples.
+
+Resources
+* https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually
+
+```
+modified:   src/lib/app/comments/CommentCard.svelte
+modified:   src/lib/app/comments/CommentForm.svelte
+modified:   src/lib/app/posts/PostCard.svelte
+modified:   src/lib/app/posts/PostForm.svelte
+modified:   src/lib/components/navbar/Nav.svelte
+modified:   src/routes/__layout.svelte
+modified:   src/routes/index.svelte
+modified:   src/routes/posts/[slug].svelte
+modified:   src/routes/posts/[slug]/edit.svelte
+modified:   src/routes/users/sign-in.svelte
+modified:   src/routes/users/sign-up.svelte
+modified:   tailwind.config.cjs
+```
+
+## EPISODE 28 - adding RSS feed
+
+Resources
+* https://validator.w3.org/feed/check.cgi
+
+```
+modified:   src/routes/index.svelte
+modified:   src/routes/posts/index.ts
+new file:   src/routes/rss.ts
+```
+
 ## EPISODE 27 - adding typescript to an existing application
 
 ```
@@ -63,6 +111,9 @@ modified:   src/routes/users/sign_out.js
 ```
 
 ## EPISODE 25 - upgrading between sveltekit versions
+
+Resources:
+* https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md
 
 ```
 npm update

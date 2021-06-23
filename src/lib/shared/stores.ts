@@ -14,12 +14,12 @@ export const createWritableStore = (key: string, startValue: any): any => {
         set(JSON.parse(json));
       }
 
-      subscribe(current => {
+      subscribe((current) => {
         localStorage.setItem(key, JSON.stringify(current));
       });
-    }
+    },
   };
-}
+};
 
 export const user = createWritableStore('user', {});
 
@@ -32,3 +32,6 @@ export const os = writable('UNKNOWN');
 
 // JS on/off-related
 export const js = writable(false);
+
+// Theme / Color
+export const theme = createWritableStore('theme', { mode: 'dark', color: 'blue' });

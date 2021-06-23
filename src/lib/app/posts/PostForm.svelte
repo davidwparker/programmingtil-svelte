@@ -57,18 +57,24 @@
   }
 </script>
 
-<form {action} method="POST" class="mb-6" transition:slide on:submit|preventDefault={handleSubmit}>
-  <div class={shadow ? 'shadow sm:rounded-md sm:overflow-hidden' : ''}>
-    <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+<form {action} method="POST" transition:slide on:submit|preventDefault={handleSubmit}>
+  <div
+    class={shadow ? 'shadow sm:rounded-md sm:overflow-hidden dark:border dark:border-gray-200' : ''}
+  >
+    <div class="px-4 py-5 space-y-6 sm:p-6 bg-white dark:bg-gray-800">
       <div class="grid grid-cols-3 gap-6">
         <div class="col-span-3 sm:col-span-2">
-          <label for="title" class="block text-sm font-medium text-gray-700"> Title </label>
+          <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+            Title
+          </label>
           <div class="mt-1 flex rounded-md shadow-sm">
             <input
               type="text"
               name="title"
               id="title"
-              class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
+              class="flex-1 block w-full border-gray-300 rounded-md sm:text-sm
+                focus:ring-primary-500 focus:border-primary-500
+                dark:bg-gray-700 dark:placeholder-gray-200 dark:text-white"
               placeholder="Title for your Post"
               bind:value={title}
             />
@@ -77,20 +83,24 @@
       </div>
 
       <div>
-        <label for="content" class="block text-sm font-medium text-gray-700"> Post Body </label>
+        <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+          Post Body
+        </label>
         <div class="mt-1">
           <textarea
             id="content"
             name="content"
             rows="3"
-            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+            class="shadow-sm mt-1 block w-full border-gray-300 rounded-md sm:text-sm
+              focus:ring-primary-500 focus:border-primary-500
+              dark:bg-gray-700 dark:placeholder-gray-200 dark:text-white"
             placeholder="Write something magnificent"
             bind:value={content}
           />
         </div>
-        <p class="mt-2 text-sm text-gray-500">Markdown supported</p>
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-300">Markdown supported</p>
       </div>
-      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+      <div class="px-4 py-3 text-right sm:px-6 bg-gray-50 dark:bg-gray-800 dark:text-black">
         <SubmitButton {submitting}>{type === 'new' ? 'Save' : 'Update'}</SubmitButton>
         <input
           type="button"

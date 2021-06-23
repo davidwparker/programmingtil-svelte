@@ -134,7 +134,7 @@
           type="text"
           class="block w-full rounded-t-md
             focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10
-          "
+            dark:bg-gray-700 dark:placeholder-gray-200 dark:text-white"
           required
           placeholder="Username or Email address"
           bind:value={login}
@@ -146,7 +146,8 @@
           name="password"
           type="password"
           class="block w-full rounded-b-md
-            focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10"
+            focus:ring-primary-300 focus:border-primary-300 focus:outline-none focus:z-10
+            dark:bg-gray-700 dark:placeholder-gray-200 dark:text-white"
           required
           placeholder="Password (6 characters minimum)"
           bind:value={password}
