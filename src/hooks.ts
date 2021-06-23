@@ -7,11 +7,13 @@ export const getSession: GetSession = (request) => {
   const userId = cookies.userId || 0;
   const username = cookies.username || '';
   const displayName = cookies.displayName || '';
+  const theme = cookies.theme || 'dark';
   return {
     API_ENDPOINT: import.meta.env.VITE_API_ENDPOINT,
     BASE_ENDPOINT: import.meta.env.VITE_BASE_ENDPOINT,
     DEBUG_MODE: import.meta.env.VITE_DEBUG_MODE,
     loggedIn,
+    theme,
     userId,
     user: {
       id: userId,
@@ -31,7 +33,20 @@ export const handle: Handle = async ({ request, render }) => {
     ...request,
     method: (request.query.get('_method') || request.method).toUpperCase(),
   });
-  const headers = response.headers;
+  const cookies = cookie.parse(request.headers.cookie || '');
+  let headers = response.headers;
+  const cookiesArray = [];
+  if (!cookies.theme) {
+    const theme = request.query.get('theme') || 'dark';
+    cookiesArray.push(`theme=${theme};path=/;expires=Fri, 31 Dec 9999 23:59:59 GMT`);
+  }
+  if (cookiesArray.length > 0) {
+    headers = {
+      ...response.headers,
+      'set-cookie': cookiesArray,
+    };
+  }
+
   return {
     ...response,
     headers,

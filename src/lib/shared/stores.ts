@@ -32,3 +32,6 @@ export const os = writable('UNKNOWN');
 
 // JS on/off-related
 export const js = writable(false);
+
+// Theme / Color
+export const theme = createWritableStore('theme', { mode: 'dark', color: 'blue' });

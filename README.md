@@ -4,6 +4,21 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 31 - dark mode (part 2)
+
+```
+modified:   README.md
+modified:   src/hooks.ts
+new file:   src/lib/components/icons/UiMoonSolid.svelte
+new file:   src/lib/components/icons/UiSunOutline.svelte
+modified:   src/lib/components/icons/index.ts
+modified:   src/lib/components/navbar/Nav.svelte
+modified:   src/lib/shared/stores.ts
+new file:   src/lib/shared/theme.ts
+modified:   src/routes/__layout.svelte
+new file:   src/routes/app/theme.ts
+```
+
 ## EPISODE 30 - dark mode (part 1)
 
 Note: skipped name "episode 29" to sync up with my other SvelteKit post about examples.
