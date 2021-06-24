@@ -4,6 +4,24 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 32 - svelte motion
+
+Resources
+* https://github.com/micha-lmxt/svelte-motion
+
+```
+modified:   package-lock.json
+modified:   package.json
+new file:   src/lib/components/motion/AnimateSharedLayout.svelte
+new file:   src/lib/components/motion/BasicAnimation1.svelte
+new file:   src/lib/components/motion/BasicAnimation2.svelte
+new file:   src/lib/components/motion/DragExample.svelte
+new file:   src/lib/components/motion/MotionConfig.svelte
+new file:   src/lib/components/motion/UseAnimationExample.svelte
+new file:   src/lib/components/motion/UseMotionValueExample.svelte
+new file:   src/routes/motion.svelte
+```
+
 ## EPISODE 31 - dark mode (part 2)
 
 ```
