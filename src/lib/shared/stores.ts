@@ -35,3 +35,6 @@ export const js = writable(false);
 
 // Theme / Color
 export const theme = createWritableStore('theme', { mode: 'dark', color: 'blue' });
+
+// tour
+export const tour = createWritableStore('tour', { display: true, step: 1 });

@@ -2,10 +2,15 @@
   import { goto } from '$app/navigation';
   import { session } from '$app/stores';
   import { onMount } from 'svelte';
+  import AnimatePresence from 'svelte-motion/src/components/AnimatePresence/AnimatePresence.svelte';
+  import AnimateSharedLayout from 'svelte-motion/src/components/AnimateSharedLayout/AnimateSharedLayout.svelte';
+  import MotionConfig from 'svelte-motion/src/components/MotionConfig/MotionConfig.svelte';
+
   import * as api from '$lib/shared/apis';
-  import { jwt, theme, user } from '$lib/shared/stores';
+  import { jwt, theme, tour, user } from '$lib/shared/stores';
   import { toggleTheme } from '$lib/shared/theme';
   import { UiMoonSolid, UiSunOutline } from '$lib/components/icons';
+  import TourStep from './_TourStep.svelte';
 
   const klass =
     'px-3 py-2 rounded-md leading-5 font-medium \
@@ -16,6 +21,7 @@
 
   onMount(() => {
     user.useLocalStorage();
+    tour.useLocalStorage();
   });
 
   async function handleSignOut() {
@@ -36,44 +42,85 @@
       // errors = ['Oops, something went wrong! How embarrassing, try again soon.'];
     }
   }
+
+  function handleTour(step) {
+    tour.set({ ...$tour, step });
+  }
+
+  function handleDismissTour() {
+    tour.set({ display: false, step: 1 });
+  }
 </script>
 
 <nav>
   <div class="max-w-7xl mx-auto px-2 sm:px-8 h-16 flex items-center">
-    <div class="flex-1">
-      <a href="/" class={klass}>Home</a>
-      <a href="/about" class="{klass} ml-1">About</a>
-      <a href="/users/sign-in/" class="{klass} ml-1" class:hidden={$session.loggedIn}> Sign In </a>
-      <a href="/users/sign-up/" class="{klass} ml-1" class:hidden={$session.loggedIn}> Register </a>
-      <a href="/users/settings/" class="{klass} ml-1" class:hidden={!$session.loggedIn}>
-        Settings
-      </a>
-      <form action="/users/sign_out?_method=delete" method="post" class="inline">
-        <input
-          type="submit"
-          value="Sign Out"
-          class="{klass} ml-1 cursor-pointer"
-          class:hidden={!$session.loggedIn}
-          on:click|preventDefault={handleSignOut}
-        />
-      </form>
-    </div>
-    <div class="flex-0">
-      <a
-        href="/app/theme"
-        class="block {klass}"
-        aria-label="Toggle Light and Dark mode"
-        on:click|preventDefault={() => {
-          toggleTheme(theme, $theme);
-        }}
-      >
-        <div class="hidden dark:block">
-          <UiSunOutline />
-        </div>
-        <div class="dark:hidden">
-          <UiMoonSolid />
-        </div>
-      </a>
-    </div>
+    <MotionConfig>
+      <AnimateSharedLayout>
+        <AnimatePresence show={true} let:item>
+          <div class="flex-1">
+            <div class="inline relative">
+              <a href="/" class={klass}> Home </a>
+              <TourStep step={1} left="-left-2">
+                Tour! This is the home button.<br />
+                <a
+                  href="/"
+                  on:click|preventDefault={() => {
+                    handleTour(2);
+                  }}>Next&rarr;</a
+                >
+              </TourStep>
+            </div>
+            <a href="/about" class="{klass} ml-1">About</a>
+            <a href="/users/sign-in/" class="{klass} ml-1" class:hidden={$session.loggedIn}>
+              Sign In
+            </a>
+            <a href="/users/sign-up/" class="{klass} ml-1" class:hidden={$session.loggedIn}>
+              Register
+            </a>
+            <a href="/users/settings/" class="{klass} ml-1" class:hidden={!$session.loggedIn}>
+              Settings
+            </a>
+            <form action="/users/sign_out?_method=delete" method="post" class="inline">
+              <input
+                type="submit"
+                value="Sign Out"
+                class="{klass} ml-1 cursor-pointer"
+                class:hidden={!$session.loggedIn}
+                on:click|preventDefault={handleSignOut}
+              />
+            </form>
+          </div>
+          <div class="flex-0 relative">
+            <a
+              href="/app/theme"
+              class="block {klass}"
+              aria-label="Toggle Light and Dark mode"
+              on:click|preventDefault={() => {
+                toggleTheme(theme, $theme);
+              }}
+            >
+              <div class="hidden dark:block">
+                <UiSunOutline />
+              </div>
+              <div class="dark:hidden">
+                <UiMoonSolid />
+              </div>
+            </a>
+            <TourStep step={2} left="-left-28">
+              Tour bit number 2.<br />
+              Dark mode button.<br />
+              <a
+                href="/"
+                on:click|preventDefault={() => {
+                  handleTour(1);
+                }}>&larr;Back</a
+              >
+              |
+              <a href="/" on:click|preventDefault={handleDismissTour}>End Tour</a>
+            </TourStep>
+          </div>
+        </AnimatePresence>
+      </AnimateSharedLayout>
+    </MotionConfig>
   </div>
 </nav>

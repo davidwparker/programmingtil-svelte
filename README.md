@@ -4,6 +4,14 @@
 npm run dev -- --port 5000
 ```
 
+## EPISODE 33 - making a simple tour using svelte motion
+
+```
+modified:   src/lib/components/navbar/Nav.svelte
+new file:   src/lib/components/navbar/_TourStep.svelte
+modified:   src/lib/shared/stores.ts
+```
+
 ## EPISODE 32 - svelte motion
 
 Resources
