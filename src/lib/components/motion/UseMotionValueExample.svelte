@@ -17,48 +17,51 @@
   const crossPathB = useTransform(x, [-35, -60], [0, 1]);
 </script>
 
-<Motion let:motion={bg} style={{ background }}>
-  <div class="background" use:bg>
-    <Motion drag="x" dragConstraints={{ left: 0, right: 0 }} style={{ x }} let:motion>
-      <div class="box center unselectable" use:motion>
-        <svg class="progress-icon" viewBox="0 0 50 50">
-          <Motion
-            isSVG={true}
-            let:motion={m}
-            style={{ translateX: 5, translateY: 5 }}
-            stroke={color}
-          >
-            <path
-              use:m
-              d="M 0, 20 a 20, 20 0 1,0 40,0 a 20, 20 0 1,0 -40,0"
-              stroke-width="2"
-              fill="none"
-            />
-          </Motion>
-          <Motion isSVG={true} let:motion={m} style={{ pathLength: tickPath }} stroke={color}>
-            <path
-              use:m
-              fill="none"
-              stroke-width="2"
-              d="M14,26 L 22,33 L 35,16"
-              strokeDasharray="0 1"
-            />
-          </Motion>
-          <Motion isSVG={true} let:motion={m} stroke={color} style={{ pathLength: crossPathA }}>
-            <path use:m fill="none" stroke-width="2" d="M17,17 L33,33" strokeDasharray="0 1" />
-          </Motion>
-          <Motion isSVG={true} let:motion={m} style={{ pathLength: crossPathB }} stroke={color}>
-            <path use:m fill="none" stroke-width="2" d="M33,17 L17,33" strokeDasharray="0 1" />
-          </Motion>
-        </svg>
-      </div>
-    </Motion>
-  </div>
-</Motion>
+<div class="q">
+  <Motion let:motion={bg} style={{ background }}>
+    <div class="background" use:bg>
+      <Motion drag="x" dragConstraints={{ left: 0, right: 0 }} style={{ x }} let:motion>
+        <div class="box center unselectable" use:motion>
+          <svg class="progress-icon" viewBox="0 0 50 50">
+            <Motion
+              isSVG={true}
+              let:motion={m}
+              style={{ translateX: 5, translateY: 5 }}
+              stroke={color}
+            >
+              <path
+                use:m
+                d="M 0, 20 a 20, 20 0 1,0 40,0 a 20, 20 0 1,0 -40,0"
+                stroke-width="2"
+                fill="none"
+              />
+            </Motion>
+            <Motion isSVG={true} let:motion={m} style={{ pathLength: tickPath }} stroke={color}>
+              <path
+                use:m
+                fill="none"
+                stroke-width="2"
+                d="M14,26 L 22,33 L 35,16"
+                strokeDasharray="0 1"
+              />
+            </Motion>
+            <Motion isSVG={true} let:motion={m} stroke={color} style={{ pathLength: crossPathA }}>
+              <path use:m fill="none" stroke-width="2" d="M17,17 L33,33" strokeDasharray="0 1" />
+            </Motion>
+            <Motion isSVG={true} let:motion={m} style={{ pathLength: crossPathB }} stroke={color}>
+              <path use:m fill="none" stroke-width="2" d="M33,17 L17,33" strokeDasharray="0 1" />
+            </Motion>
+          </svg>
+        </div>
+      </Motion>
+    </div>
+  </Motion>
+</div>
 
 <style>
-  :global(*) {
-    box-sizing: border-box;
+  .q {
+    position: relative;
+    height: 25rem;
   }
   .background {
     background: linear-gradient(250deg, rgb(50, 50, 255), rgb(150, 150, 250));
@@ -69,7 +72,6 @@
     align-items: center;
     touch-action: none;
   }
-
   .box {
     background: white;
     border-radius: 30px;

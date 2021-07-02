@@ -1,11 +1,11 @@
 <script>
   import Motion from 'svelte-motion/src/motion/MotionSSR.svelte';
-  import { tour } from '$lib/shared/stores';
+  import { js, tour } from '$lib/shared/stores';
 
   export let step, left;
 </script>
 
-{#if $tour.display && $tour.step === step}
+{#if $js && $tour.display && $tour.step === step}
   <Motion let:motion layoutId="tour">
     <div class="absolute inset-0 mt-2" use:motion>
       <div class="w-48">

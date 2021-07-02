@@ -18,9 +18,10 @@
   "dependencies": {
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/line-clamp": "^0.2.0",
-    "dompurify": "^2.2.7",
     "crypto-js": "^4.0.0",
+    "dompurify": "^2.2.7",
     "isomorphic-dompurify": "^0.12.0",
+    "mdsvex": "^0.9.7",
     "node-fetch": "^2.6.1",
     "snarkdown": "^2.0.0"
   },
@@ -41,7 +42,7 @@
     "prettier": "^2.3.0",
     "prettier-plugin-svelte": "^2.3.0",
     "svelte": "^3.38.2",
-    "svelte-motion": "^0.11.1",
+    "svelte-motion": "^0.11.2",
     "svelte-preprocess": "^4.7.3",
     "tailwindcss": "^2.0.3",
     "tslib": "^2.0.0",

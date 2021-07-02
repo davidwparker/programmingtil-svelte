@@ -7,10 +7,9 @@
   import MotionConfig from 'svelte-motion/src/components/MotionConfig/MotionConfig.svelte';
 
   import * as api from '$lib/shared/apis';
-  import { jwt, theme, tour, user } from '$lib/shared/stores';
-  import { toggleTheme } from '$lib/shared/theme';
-  import { UiMoonSolid, UiSunOutline } from '$lib/components/icons';
-  import TourStep from './_TourStep.svelte';
+  import { jwt, tour, user } from '$lib/shared/stores';
+  import ThemeToggle from './ThemeToggle.svelte';
+  import TourStep from './TourStep.svelte';
 
   const klass =
     'px-3 py-2 rounded-md leading-5 font-medium \
@@ -91,21 +90,7 @@
             </form>
           </div>
           <div class="flex-0 relative">
-            <a
-              href="/app/theme"
-              class="block {klass}"
-              aria-label="Toggle Light and Dark mode"
-              on:click|preventDefault={() => {
-                toggleTheme(theme, $theme);
-              }}
-            >
-              <div class="hidden dark:block">
-                <UiSunOutline />
-              </div>
-              <div class="dark:hidden">
-                <UiMoonSolid />
-              </div>
-            </a>
+            <ThemeToggle />
             <TourStep step={2} left="-left-28">
               Tour bit number 2.<br />
               Dark mode button.<br />

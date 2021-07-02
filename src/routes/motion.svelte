@@ -2,10 +2,10 @@
 <script>
   import BasicAnimation1 from '$lib/components/motion/BasicAnimation1.svelte';
   import BasicAnimation2 from '$lib/components/motion/BasicAnimation2.svelte';
-  // import UseAnimationExample from '$lib/components/motion/UseAnimationExample.svelte';
+  import UseAnimationExample from '$lib/components/motion/UseAnimationExample.svelte';
   import AnimateSharedLayout from '$lib/components/motion/AnimateSharedLayout.svelte';
   import DragExample from '$lib/components/motion/DragExample.svelte';
-  // import UseMotionValueExample from '$lib/components/motion/UseMotionValueExample.svelte';
+  import UseMotionValueExample from '$lib/components/motion/UseMotionValueExample.svelte';
   import MotionConfig from '$lib/components/motion/MotionConfig.svelte';
 </script>
 
@@ -21,7 +21,7 @@
 
   <h2>useAnimation</h2>
   Isn't working...
-  <!-- <UseAnimationExample /> -->
+  <UseAnimationExample />
 
   <h2>Animate Shared Layout</h2>
   <AnimateSharedLayout />
@@ -30,8 +30,7 @@
   <DragExample />
 
   <h2>Motion</h2>
-  Isn't working...
-  <!-- <UseMotionValueExample /> -->
+  <UseMotionValueExample />
 
   <h2>Motion Config</h2>
   <MotionConfig />
